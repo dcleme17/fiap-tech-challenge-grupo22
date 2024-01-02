@@ -50,13 +50,14 @@ Estrutura de diretórios do projeto
       > domains
         > acesso
             > controllers --> Implemeta a lógica de negócio e expõe adaptadores para os consumidores
-              > adapters --> Cria adaptadores para os consumidores, no caso, para API's rest
               > interfaces --> Todas as interfaces dos controllers
               cliente.controller.ts --> Classe que implementa a lógica de negócio para os clientes do sistema.
             > entities --> Entidades do domínio
             > infra --> Todos os componentes de infraestrutura externa ou interna
               > database --> Componentes e interfaces para conexão com o banco de dados
-              > rest --> Rotas rest do aplicativo
+              > rest --> Adaptadores e rotas para os serviços rest do aplicativo
+                > adapters --> Cria adaptadores para os consumidores, no caso, para API's rest
+                acesso.rest.ts --> Arquivo com as configurações das rotas
             > tests --> Pacote que implementará os casos de teste do sistema
       > environments --> arquivos de configuração de ambiente do projeto
       environment.config.ts --> Classe que controla a configuração do ambiente
