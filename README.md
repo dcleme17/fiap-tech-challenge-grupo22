@@ -12,31 +12,7 @@ Grupo 22
 
 
 
-## Rodando localmente com o Docker
-
-Execute o Docker compose 
-
-```bash
-  docker-compose up -d
-```
-
-Após completar a incialização dos containers, os serviços podem ser acessados conforme abaixo:
-
-Backend (API)
-```bash
-localhost:3002/api/<dominio>/<operações>
-```
-MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb.com/docs/mongodb-shell/)
-```bash
-localhost:3000
-```
-Mongo Express (Interface para manutenção do MongoDB)
-```bash
-localhost:8081 
-```
-
-
-## Rodando localmente para desenvolver a API
+## Preparação para desenvolver localmente
 
 Clone o projeto
 
@@ -71,15 +47,44 @@ Inicie o servidor
 Estrutura de diretórios do projeto
 
     > src
+      > domains
         > acesso
-            > routes --> expõe as rotas do projeto e define a estrutura da requisição
-            > adapters --> Faz a primeira validação do payload e traduz para as propriedades requeridas pelo controller..
-            > controllers --> Implemeta a lógica de negócio e aciona os repositórios necessários
-            > models --> Entidades de negócio, náo necessariamente uma ORM.
-            > repository --> Classes que fazem persistência de dados e/ou se comunicam com alguma outra infraestrutura
-        > pedido
-        > pagamento
-        > acompanhamento
-        > entrega
-    > tests
+            > controllers --> Implemeta a lógica de negócio e expõe adaptadores para os consumidores
+              > adapters --> Cria adaptadores para os consumidores, no caso, para API's rest
+              > interfaces --> Todas as interfaces dos controllers
+              cliente.controller.ts --> Classe que implementa a lógica de negócio para os clientes do sistema.
+            > entities --> Entidades do domínio
+            > infra --> Todos os componentes de infraestrutura externa ou interna
+              > database --> Componentes e interfaces para conexão com o banco de dados
+              > rest --> Rotas rest do aplicativo
+            > tests --> Pacote que implementará os casos de teste do sistema
+      > environments --> arquivos de configuração de ambiente do projeto
+      environment.config.ts --> Classe que controla a configuração do ambiente
+      express.config.ts --> Comfigurações do express, inclusindo middlewares utilizados no framework
+      routes.config.ts --> Configuração das rotas globais
+      server.ts --> Ponto de entrada para execução dos servidor express
 
+
+## Subindo os containers do Docker
+
+Execute os comandos abaixo (o primeiro destroi todos os containers e volumes do docker, incluindo o banco de dados, então cuidado.)
+
+```bash
+  docker-compose down -v 
+  docker-compose up -d
+```
+
+Após completar a incialização dos containers, os serviços podem ser acessados conforme abaixo:
+
+Backend (API)
+```bash
+localhost:3002/api/<dominio>/<operações>
+```
+MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb.com/docs/mongodb-shell/)
+```bash
+localhost:3000
+```
+Mongo Express (Interface para manutenção do MongoDB)
+```bash
+localhost:8081 
+```

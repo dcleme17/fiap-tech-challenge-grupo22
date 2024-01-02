@@ -29,7 +29,7 @@ services:
     networks:
       - fiap-network
   backend:
-    build: "./api/"
+    build: "./backend/"
     container_name: backend
     environment:
       - NODE_ENV=production

@@ -1,0 +1,32 @@
+{
+    "name": "@types/lodash.isequalwith",
+    "version": "4.4.9",
+    "description": "TypeScript definitions for lodash.isequalwith",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/lodash.isequalwith",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Brian Zengel",
+            "githubUsername": "bczengel",
+            "url": "https://github.com/bczengel"
+        },
+        {
+            "name": "Ilya Mochalov",
+            "githubUsername": "chrootsu",
+            "url": "https://github.com/chrootsu"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/lodash.isequalwith"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/lodash": "*"
+    },
+    "typesPublisherContentHash": "1c15c63647c82776ebe9b59062bc3bc9a397bcf6b59c47f8793e0e82150ee51e",
+    "typeScriptVersion": "4.5"
+}
