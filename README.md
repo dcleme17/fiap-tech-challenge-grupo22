@@ -71,7 +71,7 @@ Estrutura de diretórios do projeto
 Execute os comandos abaixo (o primeiro destroi todos os containers e volumes do docker, incluindo o banco de dados, então cuidado.)
 
 ```bash
-  docker-compose down -v 
+  docker-compose down -v --rmi local
   docker-compose up -d
 ```
 
