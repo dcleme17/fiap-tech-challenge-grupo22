@@ -1,5 +1,5 @@
 import { Cliente } from "domains/acesso/entities/cliente";
-import { MongoDB } from "./mongodb";
+import { MongoDB } from "domains/acesso/infra/database/mongodb";
 
 export class ClienteDatabase extends MongoDB {
     
@@ -21,7 +21,7 @@ export class ClienteDatabase extends MongoDB {
 
         const clienteRef = await this.getCollection('lanchonete', 'clientes').then()
 
-        const cursor = await clienteRef.find<Cliente>( 
+        const cursor = clienteRef.find( 
             { $and: 
                 [ {cpf}] 
             } , {
@@ -29,13 +29,23 @@ export class ClienteDatabase extends MongoDB {
             }
         ).limit(1)
 
-        let cliente: Cliente;
+        let data
 
         for await (const doc of cursor) {
-            cliente = doc;
-        } 
+            data = doc
+        }
+        
+        if (!data) {
+            return null
+        }
 
-        return cliente!
+        return  new Cliente(
+            data?.nome,
+            data?.cpf,
+            data?.email
+        )
+        .setId(data?._id.toString()!)
+        .setDataCadastro(data?._id.getTimestamp())
 
     }     
 }
