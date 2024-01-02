@@ -1,7 +1,7 @@
 import { Cliente } from "domains/acesso/entities/cliente";
 import { MongoDB } from "./mongodb";
 
-export class ClienteRepository extends MongoDB {
+export class ClienteDatabase extends MongoDB {
     
     constructor() {
         super(process.env.DATABASE_URL!);

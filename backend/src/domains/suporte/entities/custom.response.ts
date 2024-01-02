@@ -10,6 +10,6 @@ export class CustomResponse {
       this.content = content
       this.logging = logging
       
-      // if (logging) console.info(this)
+      if (logging) console.info(this)
     }
   }
