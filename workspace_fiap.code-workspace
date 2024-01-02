@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../POSTECH_SOAT_SoftwareArchitecture_tsHexagonArchitecture"
 		}
 	]
 }

@@ -47,18 +47,18 @@ Inicie o servidor
 Estrutura de diretórios do projeto
 
     > src
-      > domains
-        > acesso
-            > controllers --> Implemeta a lógica de negócio e expõe adaptadores para os consumidores
-              > interfaces --> Todas as interfaces dos controllers
-              cliente.controller.ts --> Classe que implementa a lógica de negócio para os clientes do sistema.
-            > entities --> Entidades do domínio
-            > infra --> Todos os componentes de infraestrutura externa ou interna
-              > database --> Componentes e interfaces para conexão com o banco de dados
-              > rest --> Adaptadores e rotas para os serviços rest do aplicativo
-                > adapters --> Cria adaptadores para os consumidores, no caso, para API's rest
-                acesso.rest.ts --> Arquivo com as configurações das rotas
-            > tests --> Pacote que implementará os casos de teste do sistema
+      > domains --> Todos os domínios mapeados
+        > acesso --> domínio
+            > adapters --> adaptadores de condutores e conduzidos do projeto 
+              > driven --> Adaptadores conduzidos como infra de banco de dados
+              > driver --> Adaptadores condutores como a API Rest
+                controllers --> controladores (adaptadores) das operações REST
+                routes --> Rotas expostas das API's REST
+            > core --> recursos que implementam a lógica do domínio
+              > applications --> interfaces e serviços do domínio
+                > ports --> interfaces expostas para os adaptadores
+                > servies --> Lógica de negócio do domínio
+              > entities --> Entidades do domínio
       > environments --> arquivos de configuração de ambiente do projeto
       environment.config.ts --> Classe que controla a configuração do ambiente
       express.config.ts --> Comfigurações do express, inclusindo middlewares utilizados no framework
