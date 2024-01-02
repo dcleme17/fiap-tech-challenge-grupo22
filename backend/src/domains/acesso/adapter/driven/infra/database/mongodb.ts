@@ -1,7 +1,6 @@
 import * as mongoDB from "mongodb";
-import {IMongoDB} from "./interfaces/Imongodb"
 
-export class MongoDB implements IMongoDB{
+export class MongoDB {
     url: string;
     database!: string
     collection!: string

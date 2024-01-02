@@ -4,7 +4,7 @@ export class CustomResponse {
     readonly content: any
     readonly logging: boolean
     
-    constructor(statusCode: number, message: string, content: any, logging: boolean) {
+    constructor(statusCode: number, message: string, content: any, logging: boolean = false) {
       this.statusCode = statusCode
       this.message = message
       this.content = content
