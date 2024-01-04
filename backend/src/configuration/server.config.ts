@@ -1,7 +1,7 @@
 import { Environment } from "./environment.config"
-import ExpressConfig from "./express.config"
+import ExpressConfig from "configuration/express.config"
 
-new Environment().config()
+Environment()
 
 const app = ExpressConfig()
 

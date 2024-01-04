@@ -2,9 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "Tech Challenge",
-  "main": "src/server.ts",
+  "main": "src/server.config.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/application",
+    "swagger": "tsx watch src/application.ts",
     "build": "tsc ",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix"
@@ -13,13 +14,15 @@
   "author": "Ciro Oshiro, Daniel Clemente, Eliane Yumi",
   "license": "ISC",
   "dependencies": {
+    "@types/swagger-ui-express": "^4.1.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "lodash.isequal": "^4.5.0",
-    "mongodb": "^6.3.0"
+    "mongodb": "^6.3.0",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
@@ -30,6 +33,7 @@
     "@types/node": "^20.10.6",
     "dotenv": "^16.3.1",
     "eslint": "^8.56.0",
+    "swagger-autogen": "^2.23.7",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }

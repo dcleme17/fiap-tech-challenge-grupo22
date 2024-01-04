@@ -79,8 +79,13 @@ Após completar a incialização dos containers, os serviços podem ser acessado
 
 Backend (API)
 ```bash
-localhost:3002/api/<dominio>/<operações>
+http://localhost:3002/api/<dominio>/<operações>
 ```
+Documentação (Swagger) será exposta na URL abaixo
+```bash
+http://localhost:3002/api-docs
+```
+
 MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb.com/docs/mongodb-shell/)
 ```bash
 localhost:3000

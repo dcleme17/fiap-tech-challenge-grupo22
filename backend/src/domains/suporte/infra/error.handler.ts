@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomError } from "../entities/custom.error";
+import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "../entities/custom.response";
 
 export const errorHandler = (error: Error, _request: Request, response: Response, _next: NextFunction) => {

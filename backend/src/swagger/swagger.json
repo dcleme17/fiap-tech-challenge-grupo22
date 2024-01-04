@@ -1,0 +1,145 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Tech Challenge Fiap",
+    "description": "Conjuntos dde recursos e operações do Tech Challenge da FIAP"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Acesso",
+      "description": "APIs do domínio de Acesso"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/acesso/cliente": {
+      "post": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Cria um novo cliente",
+        "description": "Cria um novo cliente a partir das informações básicas",
+        "operationId": "postcliente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/post_cliente"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/acesso/cliente/{cpf}": {
+      "put": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Atualiza um novo cliente",
+        "description": "Atualiza os dados de um cliente pelo CPF",
+        "operationId": "postcliente",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/put_cliente"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Busca um cliente pelo CPF",
+        "description": "Busca os dados de clientes pelo CPF",
+        "operationId": "postcliente",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "post_cliente": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Daniel CLmente"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "37255731821"
+        },
+        "email": {
+          "type": "string",
+          "example": "dcleme17@gmail.com"
+        }
+      },
+      "required": [
+        "nome",
+        "cpf",
+        "email"
+      ]
+    },
+    "put_cliente": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Daniel CLmente"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "37255731821"
+        },
+        "email": {
+          "type": "string",
+          "example": "dcleme17@gmail.com"
+        }
+      },
+      "required": [
+        "nome",
+        "cpf",
+        "email"
+      ]
+    }
+  }
+}

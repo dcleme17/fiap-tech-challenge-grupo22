@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import acessoRoutes from './domains/acesso/adapter/driver/rest/routes/acesso.route'
+import acessoRoutes from '../domains/acesso/adapter/driver/rest/routes/acesso.route'
 
 const routes = Router()
 
