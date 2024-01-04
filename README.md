@@ -6,7 +6,7 @@ Grupo 22
 
 **Front-end:** N/A
 
-**Back-end:** Node 20, Express 4.X.X, Typescript
+**Back-end:** Node 20, Express 4.18.2, Typescript 5.3.3
 
 **Banco:** MongoDB
 
