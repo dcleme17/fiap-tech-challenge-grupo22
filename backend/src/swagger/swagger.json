@@ -94,6 +94,100 @@
         },
         "deprecated": false
       }
+    },
+    "/api/acesso/produto": {
+      "post": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Cria um novo produto",
+        "description": "Cria um novo produto a partir das informações básicas",
+        "operationId": "postproduto",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/post_produto"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "lista todos os produtos",
+        "description": "lista todos os produtos",
+        "operationId": "getProduto",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/acesso/produto/{codigo}": {
+      "put": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Atualiza um novo produto",
+        "description": "Atualiza os dados de um produto pelo codigo",
+        "operationId": "postproduto",
+        "parameters": [
+          {
+            "name": "codigo",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/put_produto"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/acesso/produto/{categoria}": {
+      "get": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "busca produtos por categoria",
+        "description": "busca produtos por categoria",
+        "operationId": "getProduto",
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
     }
   },
   "definitions": {

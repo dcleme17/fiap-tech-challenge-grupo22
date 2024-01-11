@@ -1,6 +1,8 @@
 import {
     post_cliente, 
-    put_cliente
+    put_cliente,
+    post_produto, 
+    put_produto
 } from 'domains/acesso/adapter/driver/rest/swagger/acesso.swagger'
 
 export const swagger = {
@@ -18,6 +20,8 @@ export const swagger = {
     ],
     definitions: {
         post_cliente,
-        put_cliente
+        put_cliente,
+        post_produto, 
+        put_produto
     }
 }

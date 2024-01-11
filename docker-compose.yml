@@ -3,7 +3,7 @@ services:
     image: mongo-express
     container_name: mongo-express
     environment:
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
       ME_CONFIG_BASICAUTH_USERNAME: fiap
       ME_CONFIG_BASICAUTH_PASSWORD: fiap2023
       ME_CONFIG_MONGODB_PORT: 27017
