@@ -46,4 +46,26 @@ export class ProdutoService {
             throw new CustomError('Produto não encontrado com o codigo informado', 404, false, [])
         }
     }
+
+    async buscaCategoria(categoria: string): Promise<Array<Produto>> {
+
+        const listaProduto = await this.database.buscaCategoria(categoria)
+
+        if (listaProduto) {
+            return listaProduto
+        } else {
+            throw new CustomError('Produto não encontrado com o codigo informado', 404, false, [])
+        }
+    }
+
+    async buscaListaProduto(): Promise<Array<Produto>> {
+
+        const listaProduto = await this.database.buscaListaProduto()
+
+        if (listaProduto) {
+            return listaProduto
+        } else {
+            throw new CustomError('Produto não encontrado na base', 404, false, [])
+        }
+    }
 }

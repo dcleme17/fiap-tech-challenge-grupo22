@@ -63,4 +63,66 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
             )
         )
     }     
+
+    async buscaListaProduto(): Promise<Array<Produto>>{
+
+        const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
+
+        const cursor = produtoRef.find()
+
+        let listaProdutos = []
+
+        for await (const doc of cursor) {
+
+            if (!doc) {
+                return []
+            } 
+            listaProdutos.push(
+                new Produto(
+                    doc?.codigo,
+                    doc?.produto,
+                    doc?.categoria,
+                    doc?.preco,
+                    doc?.descricao,
+                    new ProdutoVersao(
+                        doc?._id.toString(),
+                        doc?._id.getTimestamp()
+                    ))
+            )
+        }
+        return listaProdutos
+    }  
+    
+    async buscaCategoria(categoria : string): Promise<Array<Produto>>{
+
+        const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
+
+        const cursor = produtoRef.find(
+            {
+                categoria: categoria
+            }
+        )
+
+        let listaProdutos = []
+
+        for await (const doc of cursor) {
+
+            if (!doc) {
+                return []
+            } 
+            listaProdutos.push(
+                new Produto(
+                    doc?.codigo,
+                    doc?.produto,
+                    doc?.categoria,
+                    doc?.preco,
+                    doc?.descricao,
+                    new ProdutoVersao(
+                        doc?._id.toString(),
+                        doc?._id.getTimestamp()
+                    ))
+            )
+        }
+        return listaProdutos
+    } 
 }

@@ -5,4 +5,5 @@ export interface IProduto {
     adiciona: (produto: Produto) => Promise<ProdutoVersao | null>
     atualiza: (produto: Produto) => Promise<ProdutoVersao | null>
     buscaUltimaVersao: (codigo: string) => Promise<Produto | null>
+    buscaCategoria: (categoria: string) => Promise<Array<Produto>>
 }

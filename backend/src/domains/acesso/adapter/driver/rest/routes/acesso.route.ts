@@ -150,28 +150,6 @@ acessoRoutes.get('/cliente/:cpf',
     controller.atualiza(request, next).then()
   });
 
-  
-acessoRoutes.get('/produto',
-(request: Request, _response: Response, next: NextFunction) => {
-
-  /**
-      @Swagger
-      #swagger.auto = true
-      #swagger.summary = 'lista todos os produtos'
-      #swagger.description = 'lista todos os produtos'
-      #swagger.operationId = 'getProduto'
-      #swagger.deprecated = false
-      #swagger.tags = ['Acesso']
-  */        
-
-  const database = new ProdutoDatabase();
-  const service = new ProdutoService(database)
-  const controller = new ProdutoController(service)
-
-  controller.buscaUltimaVersao(request, next).then()
-});
-
-
 acessoRoutes.get('/produto/:categoria',
   param('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
 (request: Request, _response: Response, next: NextFunction) => {
@@ -190,7 +168,7 @@ acessoRoutes.get('/produto/:categoria',
   const service = new ProdutoService(database)
   const controller = new ProdutoController(service)
 
-  controller.buscaUltimaVersao(request, next).then()
+  controller.buscaProduto(request, next).then()
 });
 
 acessoRoutes.post('/pedido',

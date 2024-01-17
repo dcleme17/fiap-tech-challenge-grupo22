@@ -57,5 +57,31 @@ export class ProdutoController {
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }        
-    }    
+    }  
+    
+    async buscaProduto(request: Request, next: NextFunction): Promise<void> {
+        const result = validationResult(request)
+
+        if (!result.isEmpty()) {
+            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+        }
+    
+        const {categoria} = request.params
+
+        if(categoria.toLowerCase()=='todos') {
+            try {
+                next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaListaProduto()))
+            } catch (err){
+                next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            } 
+        } else {
+            try {
+                next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaCategoria(categoria)))
+            } catch (err){
+                next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            } 
+        }
+
+               
+    }  
 }

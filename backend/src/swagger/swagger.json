@@ -118,20 +118,6 @@
           }
         },
         "deprecated": false
-      },
-      "get": {
-        "tags": [
-          "Acesso"
-        ],
-        "summary": "lista todos os produtos",
-        "description": "lista todos os produtos",
-        "operationId": "getProduto",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "deprecated": false
       }
     },
     "/api/acesso/produto/{codigo}": {
