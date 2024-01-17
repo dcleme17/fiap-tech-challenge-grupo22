@@ -1,11 +1,14 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { ClienteController } from "domains/acesso/adapter/driver/rest/controllers/cliente.controller"
 import { ProdutoController } from "domains/acesso/adapter/driver/rest/controllers/produto.controller"
+import { PedidoController } from "domains/acesso/adapter/driver/rest/controllers/pedido.controller"
 import { body, param } from 'express-validator'
 import { ClienteService } from 'domains/acesso/core/applications/services/cliente.service';
 import { ClienteDatabase } from 'domains/acesso/adapter/driven/infra/database/cliente.database';
 import { ProdutoService } from 'domains/acesso/core/applications/services/produto.service';
 import { ProdutoDatabase } from 'domains/acesso/adapter/driven/infra/database/produto.database';
+import { PedidoService } from 'domains/acesso/core/applications/services/pedido.service';
+import { PedidoDatabase } from 'domains/acesso/adapter/driven/infra/database/pedido.database';
 
 const acessoRoutes = Router();
 
@@ -190,5 +193,99 @@ acessoRoutes.get('/produto/:categoria',
   controller.buscaUltimaVersao(request, next).then()
 });
 
+acessoRoutes.post('/pedido',
+  body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
+  body('data').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaEntrada').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaSaida').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('valor').trim().notEmpty(),
+  body('status').trim().isLength({ min: 5, max: 20 }),
+
+  (request: Request, _response: Response, next: NextFunction) => {
+  
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Cria um novo pedido'
+        #swagger.description = 'Cria um novo pedido'
+        #swagger.operationId = 'postpedido'
+        #swagger.deprecated = false
+        #swagger.tags = ['Acesso']
+        #swagger.parameters['body'] = {
+                in: 'body',
+                'schema': { $ref: '#/definitions/post_pedido'  }
+        }
+    */
+
+    const database = new PedidoDatabase();
+    const service = new PedidoService(database)
+    const controller = new PedidoController(service)
+    
+    controller.adiciona(request, next).then()
+    
+  });
+
+  acessoRoutes.put('/pedido/:codigoPedido',
+  param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
+  body('data').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaEntrada').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaSaida').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('valor').trim().notEmpty(),
+  body('status').trim().isLength({ min: 5, max: 20 }),
+  (request: Request, _response: Response, next: NextFunction) => {
+
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Atualiza um pedido'
+        #swagger.description = 'Atualiza os dados de um pedido pelo codigo'
+        #swagger.operationId = 'putpedido'
+        #swagger.deprecated = false
+        #swagger.tags = ['Acesso']
+        #swagger.parameters['body'] = { 
+                in: 'body', 
+                'schema': { $ref: '#/definitions/put_pedido' }
+        }
+    */    
+
+    const database = new PedidoDatabase();
+    const service = new PedidoService(database)
+    const controller = new PedidoController(service)
+
+    controller.atualiza(request, next).then()
+  });
+
+  acessoRoutes.get('/pedido',
+  body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
+  body('data').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaEntrada').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('horaSaida').trim().isLength({ min: 10, max: 10 }).notEmpty(),
+  body('valor').trim().notEmpty(),
+  body('status').trim().isLength({ min: 5, max: 20 }),
+ (request: Request, _response: Response, next: NextFunction) => {
+
+  /**
+      @Swagger
+      #swagger.auto = true
+      #swagger.summary = 'lista todos os pedidos'
+      #swagger.description = 'lista todos os pedidos'
+      #swagger.operationId = 'getPedido'
+      #swagger.deprecated = false
+      #swagger.tags = ['Acesso']
+      #swagger.parameters['body'] = { 
+                in: 'body', 
+                'schema': { $ref: '#/definitions/get_pedido' }
+      }
+  */        
+
+  const database = new PedidoDatabase();
+  const service = new PedidoService(database)
+  const controller = new PedidoController(service)
+
+  controller.buscaUltimaVersao(request, next).then()
+});
 
 export default acessoRoutes;
