@@ -2,13 +2,13 @@ import { PedidoVersao } from "./pedido.versao"
 
 export class Pedido {
 
-    constructor(codigoPedido: string, cpf: string, data: string, horaEntrada: string, horaSaida: string, valor: string, status: string, versao: PedidoVersao | null = null) {
+    constructor(codigoPedido: string, cpf: string, data: string, horaEntrada: string, horaSaida: string, valorPedido: string, status: string, versao: PedidoVersao | null = null) {
         this.codigoPedido = codigoPedido
         this.cpf = cpf
         this.data = data  
         this.horaEntrada = horaEntrada
         this.horaSaida = horaSaida
-        this.valor = valor
+        this.valorPedido = valorPedido
         this.status = status
         this.versao = versao
     }
@@ -43,9 +43,9 @@ export class Pedido {
         return this.horaSaida
     }
 
-    private valor: string
-    public getValor(): string {
-        return this.valor
+    private valorPedido: string
+    public getValorPedido(): string {
+        return this.valorPedido
     }
 
     private status: string

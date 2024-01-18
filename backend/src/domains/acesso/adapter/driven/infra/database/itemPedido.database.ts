@@ -1,6 +1,6 @@
 import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
 import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
-import { IItemPedido } from "domains/acesso/core/applications/ports/itemPedido";
+import { IItemPedido } from "domains/acesso/core/applications/ports/itemPedido.port";
 import { ItemPedidoVersao } from "domains/acesso/core/entities/itemPedido.versao";
 
 export class ItemPedidoDatabase extends MongoDB implements IItemPedido {
@@ -15,10 +15,11 @@ export class ItemPedidoDatabase extends MongoDB implements IItemPedido {
         
         const result = await itemPedidoRef.insertOne({
             codigoPedido: itemPedido.getCodigoPedido(),
-            codigoProduto: itemPedido.getcodigoProduto(),
-            qtde: itemPedido.getqtde(),
-            valor: itemPedido.getvalor(),
-            observacao: itemPedido.getobservacao(),
+            codigoProduto: itemPedido.getCodigoProduto(),
+            descricaoProduto: itemPedido.getDescricaoProduto(),
+            qtde: itemPedido.getQtde(),
+            valor: itemPedido.getValor(),
+            observacao: itemPedido.getObservacao(),
             versao: itemPedido.getVersao() 
         });
 
@@ -55,6 +56,7 @@ export class ItemPedidoDatabase extends MongoDB implements IItemPedido {
         return new ItemPedido(
             data?.codigoPedido,
             data?.codigoProduto,
+            data?.descricaoProduto,
             data?.qtde,
             data?.valor,
             data?.observacao,

@@ -29,7 +29,7 @@ export const get_pedido = {
             $data: "13/01/2023",
             $horaEntrada: "18:05",
             $horaSaida: "18:15",
-            $valor: "46,00",
+            $valorPedido: "46,00",
             $status: "Finalizado",
             $itensPedidos: [
                 {
@@ -91,7 +91,7 @@ export const post_pedido = {
             $data: "13/01/2023",
             $horaEntrada: "18:05",
             $horaSaida: "18:15",
-            $valor: "46,00",
+            $valorPedido: "46,00",
             $status: "Finalizado",
             $itensPedidos: [
                 {
@@ -127,7 +127,7 @@ export const put_pedido = {
             $data: "13/01/2023",
             $horaEntrada: "18:05",
             $horaSaida: "18:15",
-            $valor: "46,00",
+            $valorPedido: "46,00",
             $status: "Finalizado",
             $itensPedidos: [
                 {

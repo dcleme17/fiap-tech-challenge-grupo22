@@ -4,6 +4,7 @@ import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
 import { PedidoService } from 'domains/acesso/core/applications/services/pedido.service';
 import { Pedido } from 'domains/acesso/core/entities/pedido';
+import { ItemPedido } from 'domains/acesso/core/entities/itemPedido';
 
 export class PedidoController {
 
@@ -16,10 +17,10 @@ export class PedidoController {
             throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
         }
     
-        const {codigoPedido, cpf, data, horaEntrada, horaSaida, valor, status} = request.body
-        
+        const {codigoPedido, cpf, data, horaEntrada, horaSaida, valorPedido, status, itensPedidos} = request.body
+
         try {
-            return next(new CustomResponse(200, 'Pedido adicionado', await this.service.adiciona(new Pedido (codigoPedido, cpf, data, horaEntrada, horaSaida, valor, status) )))
+            return next(new CustomResponse(200, 'Pedido adicionado', await this.service.adiciona(new Pedido (codigoPedido, cpf, data, horaEntrada, horaSaida, valorPedido, status),itensPedidos )))
         } catch (err){
             return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }

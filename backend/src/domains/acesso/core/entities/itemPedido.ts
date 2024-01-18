@@ -2,9 +2,10 @@ import { ItemPedidoVersao } from "./itemPedido.versao"
 
 export class ItemPedido {
 
-    constructor(codigoPedido: string, codigoProduto: string, qtde: string, valor: string, observacao: string, versao: ItemPedidoVersao | null = null) {
+    constructor(codigoPedido: string, codigoProduto: string, descricaoProduto: string,  qtde: string, valor: string, observacao: string, versao: ItemPedidoVersao | null = null) {
         this.codigoPedido = codigoPedido
         this.codigoProduto = codigoProduto
+        this.descricaoProduto = descricaoProduto
         this.qtde = qtde  
         this.valor = valor
         this.observacao = observacao
@@ -22,22 +23,27 @@ export class ItemPedido {
     }
 
     private codigoProduto: string
-    public getcodigoProduto(): string {
+    public getCodigoProduto(): string {
         return this.codigoProduto
     }
 
+    private descricaoProduto: string
+    public getDescricaoProduto(): string {
+        return this.descricaoProduto
+    }
+
     private qtde: string
-    public getqtde(): string {
+    public getQtde(): string {
         return this.qtde
     }
 
     private valor: string
-    public getvalor(): string {
+    public getValor(): string {
         return this.valor
     }
 
     private observacao: string
-    public getobservacao(): string {
+    public getObservacao(): string {
         return this.observacao
     }
 

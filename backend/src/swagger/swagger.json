@@ -476,7 +476,7 @@
                 "type": "string",
                 "example": "18:15"
               },
-              "valor": {
+              "valorPedido": {
                 "type": "string",
                 "example": "46,00"
               },
@@ -526,7 +526,7 @@
               "data",
               "horaEntrada",
               "horaSaida",
-              "valor",
+              "valorPedido",
               "status",
               "itensPedidos"
             ]
@@ -565,7 +565,7 @@
                 "type": "string",
                 "example": "18:15"
               },
-              "valor": {
+              "valorPedido": {
                 "type": "string",
                 "example": "46,00"
               },
@@ -615,7 +615,7 @@
               "data",
               "horaEntrada",
               "horaSaida",
-              "valor",
+              "valorPedido",
               "status",
               "itensPedidos"
             ]

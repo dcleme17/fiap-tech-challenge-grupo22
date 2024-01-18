@@ -2,6 +2,9 @@ import { Pedido } from "domains/acesso/core/entities/pedido";
 import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
 import { IPedido } from "domains/acesso/core/applications/ports/pedido.port";
 import { PedidoVersao } from "domains/acesso/core/entities/pedido.versao";
+import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
+import { IItemPedido } from "domains/acesso/core/applications/ports/itemPedido.port";
+import { ItemPedidoVersao } from "domains/acesso/core/entities/itemPedido.versao";
 
 export class PedidoDatabase extends MongoDB implements IPedido {
     
@@ -9,7 +12,7 @@ export class PedidoDatabase extends MongoDB implements IPedido {
         super(process.env.DATABASE_URL!);
     }
     
-    async adiciona(pedido: Pedido): Promise<PedidoVersao | null> {
+    async adiciona(pedido: Pedido): Promise<PedidoVersao> {
         
         const pedidoRef = await this.getCollection('lanchonete', 'pedido').then();
         
@@ -19,13 +22,24 @@ export class PedidoDatabase extends MongoDB implements IPedido {
             data: pedido.getData(),
             horaEntrada: pedido.gethoraEntrada(),
             horaSaida: pedido.gethoraSaida(),
-            valor: pedido.getValor(),
+            valor: pedido.getValorPedido(),
             status: pedido.getStatus(),
             versao: pedido.getVersao()
         });
 
         return new PedidoVersao(result.insertedId.toString(), result.insertedId.getTimestamp())
         
+    }
+
+    async adicionaItem(itemPedidos : Array<ItemPedido>): Promise<Array<ItemPedidoVersao> | null> {
+        
+        const itemPedidoRef = await this.getCollection('lanchonete', 'itemPedido').then();
+        let itemVersao = []
+
+        const result = await itemPedidoRef.insertMany(itemPedidos)
+        console.log("item adicionado")
+        itemVersao.push(new ItemPedidoVersao(result.insertedIds.toString(), new Date()))
+        return itemVersao
     }
     
     async atualiza(pedido: Pedido): Promise<PedidoVersao | null> {
@@ -60,7 +74,7 @@ export class PedidoDatabase extends MongoDB implements IPedido {
             data?.data,
             data?.horaEntrada,
             data?.horaSaida,
-            data?.valor,
+            data?.valorPedido,
             data?.status,
             new PedidoVersao(
                 data?._id.toString(),
