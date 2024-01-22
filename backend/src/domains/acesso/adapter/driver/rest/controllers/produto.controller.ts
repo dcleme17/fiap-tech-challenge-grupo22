@@ -84,4 +84,20 @@ export class ProdutoController {
 
                
     }  
+
+    async remove(request: Request, next: NextFunction): Promise<void> {
+        const result = validationResult(request)
+
+        if (!result.isEmpty()) {
+            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+        }
+    
+        const {codigo} = request.params
+
+        try {
+            next( new CustomResponse(200, 'Produto removido', await this.service.remove(codigo)))
+        } catch (err){
+            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+        } 
+    }  
 }

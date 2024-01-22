@@ -68,4 +68,13 @@ export class ProdutoService {
             throw new CustomError('Produto não encontrado na base', 404, false, [])
         }
     }
+
+    async remove(codigo : string) {
+
+        try {
+            const retorno = await this.database.remove(codigo)
+        } catch (err) {
+            throw new CustomError('Erro ao remover o produto da base', 404, false, [])
+        }
+    }
 }

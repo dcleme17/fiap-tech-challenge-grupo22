@@ -7,4 +7,5 @@ export interface IProduto {
     buscaUltimaVersao: (codigo: string) => Promise<Produto | null>
     buscaCategoria: (categoria: string) => Promise<Array<Produto>>
     buscaListaProduto: () => Promise<Array<Produto>>
+    remove: (codigo : string)
 }

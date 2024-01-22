@@ -2,6 +2,7 @@ import { Produto } from "domains/acesso/core/entities/produto";
 import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
 import { IProduto } from "domains/acesso/core/applications/ports/produto.port";
 import { ProdutoVersao } from "domains/acesso/core/entities/produto.versao";
+import { CustomError } from "domains/suporte/entities/custom.error";
 
 export class ProdutoDatabase extends MongoDB implements IProduto {
     
@@ -124,5 +125,20 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
             )
         }
         return listaProdutos
+    } 
+
+     async remove(codigo : string) {
+
+        const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
+
+        try {
+            const cursor = produtoRef.deleteMany(
+                {
+                    codigo: codigo
+                }
+            )
+        } catch(err) {
+            throw new CustomError('Produto não encontrado com o codigo informado', 404, false, [])
+        }
     } 
 }

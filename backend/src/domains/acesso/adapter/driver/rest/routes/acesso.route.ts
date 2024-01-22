@@ -153,6 +153,27 @@ acessoRoutes.get('/cliente/:cpf',
     controller.atualiza(request, next).then()
   });
 
+  acessoRoutes.delete('/produto/:codigo',
+  param('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
+  (request: Request, _response: Response, next: NextFunction) => {
+
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Deleta um produto'
+        #swagger.description = 'Deleta os dados de um produto pelo codigo'
+        #swagger.operationId = 'deleteproduto'
+        #swagger.deprecated = false
+        #swagger.tags = ['Acesso']
+    */    
+
+    const database = new ProdutoDatabase();
+    const service = new ProdutoService(database)
+    const controller = new ProdutoController(service)
+    console.log("ACESSOROUTE -> PRODUTO DELETE")
+    controller.remove(request, next).then()
+  });
+
 acessoRoutes.get('/produto/:categoria',
   param('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
 (request: Request, _response: Response, next: NextFunction) => {

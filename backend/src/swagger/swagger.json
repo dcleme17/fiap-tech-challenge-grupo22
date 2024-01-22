@@ -149,6 +149,28 @@
           }
         },
         "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Deleta um produto",
+        "description": "Deleta os dados de um produto pelo codigo",
+        "operationId": "deleteproduto",
+        "parameters": [
+          {
+            "name": "codigo",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
       }
     },
     "/api/acesso/produto/{categoria}": {
