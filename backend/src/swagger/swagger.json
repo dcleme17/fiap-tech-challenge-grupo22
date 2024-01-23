@@ -94,6 +94,37 @@
         },
         "deprecated": false
       }
+    },
+    "/api/acesso/cliente/{cpf}/nome": {
+      "patch": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Busca um cliente pelo CPF",
+        "description": "Busca os dados de clientes pelo CPF",
+        "operationId": "postcliente",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/patch_cliente_nome"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
     }
   },
   "definitions": {
@@ -139,6 +170,18 @@
         "nome",
         "cpf",
         "email"
+      ]
+    },
+    "patch_cliente_nome": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Daniel CLmente"
+        }
+      },
+      "required": [
+        "nome"
       ]
     }
   }

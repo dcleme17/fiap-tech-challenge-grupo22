@@ -23,7 +23,7 @@ Clone o projeto
 Vá para o diretório do projeto
 
 ```bash
-  cd fiap-tech-challenge-grupo22/api
+  cd fiap-tech-challenge-grupo22/backend
 ```
 
 Instale o pnpm (pelo menos 3 vezes mais rápido que o npm)
