@@ -1,13 +1,17 @@
 import {
     post_cliente, 
     put_cliente,
+
+} from 'domains/acesso/adapter/driver/rest/swagger/acesso.swagger'
+
+import {
     post_produto, 
     put_produto,
     get_pedido,
     post_pedido,
     put_pedido
 
-} from 'domains/acesso/adapter/driver/rest/swagger/acesso.swagger'
+} from 'domains/acesso/adapter/driver/rest/swagger/lanchonete.swagger'
 
 export const swagger = {
     info: {
