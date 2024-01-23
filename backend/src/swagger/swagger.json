@@ -95,7 +95,7 @@
         "deprecated": false
       }
     },
-    "/api/acesso/produto": {
+    "/api/lanchonete/produto": {
       "post": {
         "tags": [
           "Acesso"
@@ -120,7 +120,7 @@
         "deprecated": false
       }
     },
-    "/api/acesso/produto/{codigo}": {
+    "/api/lanchonete/produto/{codigo}": {
       "put": {
         "tags": [
           "Acesso"
@@ -173,7 +173,7 @@
         "deprecated": false
       }
     },
-    "/api/acesso/produto/{categoria}": {
+    "/api/lanchonete/produto/{categoria}": {
       "get": {
         "tags": [
           "Acesso"
@@ -197,7 +197,7 @@
         "deprecated": false
       }
     },
-    "/api/acesso/pedido": {
+    "/api/lanchonete/pedido": {
       "post": {
         "tags": [
           "Acesso"
@@ -245,7 +245,7 @@
         "deprecated": false
       }
     },
-    "/api/acesso/pedido/{codigoPedido}": {
+    "/api/lanchonete/pedido/{codigoPedido}": {
       "put": {
         "tags": [
           "Acesso"
