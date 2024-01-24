@@ -7,11 +7,15 @@ import {
 import {
     post_produto, 
     put_produto,
+
+} from 'domains/pedido/adapter/driver/rest/swagger/produto.swagger'
+
+import {
     get_pedido,
     post_pedido,
     put_pedido
 
-} from 'domains/acesso/adapter/driver/rest/swagger/lanchonete.swagger'
+} from 'domains/pedido/adapter/driver/rest/swagger/pedido.swagger'
 
 export const swagger = {
     info: {
@@ -28,6 +32,11 @@ export const swagger = {
     ],
     definitions: {
         post_cliente,
-        put_cliente
+        put_cliente,
+        post_produto,
+        put_produto,
+        get_pedido,
+        post_pedido,
+        put_pedido
     }
 }

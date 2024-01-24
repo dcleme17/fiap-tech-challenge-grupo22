@@ -1,6 +1,6 @@
-import { Produto } from "domains/acesso/core/entities/produto";
-import { ProdutoVersao } from "domains/acesso/core/entities/produto.versao";
-import { ProdutoDatabase } from "domains/acesso/adapter/driven/infra/database/produto.database"
+import { Produto } from "domains/pedido/core/entities/produto";
+import { ProdutoVersao } from "domains/pedido/core/entities/produto.versao";
+import { ProdutoDatabase } from "domains/pedido/adapter/driven/infra/database/produto.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
 export class ProdutoService {

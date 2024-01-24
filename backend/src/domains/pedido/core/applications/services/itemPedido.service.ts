@@ -1,6 +1,6 @@
-import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
-import { ItemPedidoVersao } from "domains/acesso/core/entities/itemPedido.versao";
-import { ItemPedidoDatabase } from "domains/acesso/adapter/driven/infra/database/itemPedido.database"
+import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
+import { ItemPedidoVersao } from "domains/pedido/core/entities/itemPedido.versao";
+import { ItemPedidoDatabase } from "domains/pedido/adapter/driven/infra/database/itemPedido.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
 export class ItemPedidoService {

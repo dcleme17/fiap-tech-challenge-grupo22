@@ -1,5 +1,5 @@
-import { Pedido } from "domains/acesso/core/entities/pedido"
-import { PedidoVersao } from "domains/acesso/core/entities/pedido.versao"
+import { Pedido } from "domains/pedido/core/entities/pedido"
+import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao"
 
 export interface IPedido {
     adiciona: (pedido: Pedido) => Promise<PedidoVersao | null>

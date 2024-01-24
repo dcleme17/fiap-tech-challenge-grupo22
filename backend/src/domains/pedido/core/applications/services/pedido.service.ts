@@ -1,7 +1,7 @@
-import { Pedido } from "domains/acesso/core/entities/pedido";
-import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
-import { PedidoVersao } from "domains/acesso/core/entities/pedido.versao";
-import { PedidoDatabase } from "domains/acesso/adapter/driven/infra/database/pedido.database"
+import { Pedido } from "domains/pedido/core/entities/pedido";
+import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
+import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
+import { PedidoDatabase } from "domains/pedido/adapter/driven/infra/database/pedido.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
 export class PedidoService {

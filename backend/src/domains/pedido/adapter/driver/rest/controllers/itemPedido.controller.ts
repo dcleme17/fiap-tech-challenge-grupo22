@@ -2,13 +2,12 @@ import {NextFunction, Request, Response} from 'express';
 import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
-import { PedidoService } from 'domains/acesso/core/applications/services/pedido.service';
-import { Pedido } from 'domains/acesso/core/entities/pedido';
-import { ItemPedido } from 'domains/acesso/core/entities/itemPedido';
+import { ItemPedidoService } from 'domains/pedido/core/applications/services/itemPedido.service';
+import { ItemPedido } from 'domains/pedido/core/entities/itemPedido';
 
-export class PedidoController {
+export class ItemPedidoController {
 
-    constructor(private readonly service: PedidoService) {}
+    constructor(private readonly service: ItemPedidoService) {}
 
     async adiciona(request: Request, next: NextFunction): Promise<void> {
         const result = validationResult(request)
@@ -17,10 +16,10 @@ export class PedidoController {
             throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
         }
     
-        const {codigoPedido, cpf, data, horaEntrada, horaSaida, valorPedido, status, itensPedidos} = request.body
-
+        const {codigoPedido, codigoProduto, qtde, valor, observacao} = request.body
+        
         try {
-            return next(new CustomResponse(200, 'Pedido adicionado', await this.service.adiciona(new Pedido (codigoPedido, cpf, data, horaEntrada, horaSaida, valorPedido, status),itensPedidos )))
+            return next(new CustomResponse(200, 'Item Pedido adicionado', await this.service.adiciona(new ItemPedido (codigoPedido, codigoProduto, qtde, valor, observacao) )))
         } catch (err){
             return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }
@@ -34,10 +33,10 @@ export class PedidoController {
             throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
         }
     
-        const {cpf, data, horaEntrada, horaSaida, valor, status} = request.body
+        const {codigoProduto, qtde, valor, observacao} = request.body
 
         try {
-            next( new CustomResponse(200, 'Produto atualizado', await this.service.atualiza(new Pedido (request.params.codigoPedido, cpf, data, horaEntrada, horaSaida, valor, status))))
+            next( new CustomResponse(200, 'Produto atualizado', await this.service.atualiza(new ItemPedido (request.params.codigoPedido, codigoProduto, qtde, valor, observacao))))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }
@@ -51,10 +50,10 @@ export class PedidoController {
             throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
         }
     
-        const {codigoPedido, cpf} = request.body
-       
+        const {codigo} = request.params
+
         try {
-            next( new CustomResponse(200, 'Pedido adicionado', await this.service.buscaUltimaVersao(codigoPedido, cpf)))
+            next( new CustomResponse(200, 'Item do Pedido adicionado', await this.service.buscaUltimaVersao(codigo)))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }        

@@ -1,19 +1,19 @@
-import { Produto } from "domains/acesso/core/entities/produto";
-import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
-import { IProduto } from "domains/acesso/core/applications/ports/produto.port";
-import { ProdutoVersao } from "domains/acesso/core/entities/produto.versao";
+import { Produto } from "domains/pedido/core/entities/produto";
+import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
+import { IProduto } from "domains/pedido/core/applications/ports/produto.port";
+import { ProdutoVersao } from "domains/pedido/core/entities/produto.versao";
 import { CustomError } from "domains/suporte/entities/custom.error";
 
 export class ProdutoDatabase extends MongoDB implements IProduto {
-    
+
     constructor() {
         super(process.env.DATABASE_URL!);
     }
-    
+
     async adiciona(produto: Produto): Promise<ProdutoVersao | null> {
-        
+
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then();
-        
+
         const result = await produtoRef.insertOne({
             codigo: produto.getCodigo(),
             produto: produto.getProduto(),
@@ -23,23 +23,24 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
         });
 
         return new ProdutoVersao(result.insertedId.toString(), result.insertedId.getTimestamp())
-        
+
     }
-    
+
     async atualiza(produto: Produto): Promise<ProdutoVersao | null> {
         return this.adiciona(produto);
     }
 
-    async buscaUltimaVersao(codigo: string): Promise<Produto | null>{
+    async buscaUltimaVersao(codigo: string): Promise<Produto> {
 
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
 
-        const cursor = produtoRef.find( 
-            { $and: 
-                [ {codigo}] 
-            } , {
-                sort: {_id: "desc"}
-            }
+        const cursor = produtoRef.find(
+            {
+                $and:
+                    [{ codigo }]
+            }, {
+            sort: { _id: "desc" }
+        }
         ).limit(1)
 
         let data
@@ -49,10 +50,10 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
         }
 
         if (!data) {
-            return null
+            throw new CustomError('Produto não encontrado com o codigo informado', 404, false, [])
         }
 
-        return  new Produto(
+        return new Produto(
             data?.codigo,
             data?.produto,
             data?.categoria,
@@ -63,38 +64,47 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
                 data?._id.getTimestamp()
             )
         )
-    }     
+    }
 
-    async buscaListaProduto(): Promise<Array<Produto>>{
+    async buscaListaProduto(): Promise<Array<Produto>> {
 
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
 
-        const cursor = produtoRef.find()
+        const codigosUnicos = await produtoRef.distinct('codigo');
 
-        let listaProdutos = []
+        let listaProdutos = new Array<Produto>
 
-        for await (const doc of cursor) {
-
-            if (!doc) {
-                return []
-            } 
-            listaProdutos.push(
-                new Produto(
-                    doc?.codigo,
-                    doc?.produto,
-                    doc?.categoria,
-                    doc?.preco,
-                    doc?.descricao,
-                    new ProdutoVersao(
-                        doc?._id.toString(),
-                        doc?._id.getTimestamp()
-                    ))
-            )
+        for await (const i of codigosUnicos) {
+            let prod = this.buscaUltimaVersao(i).then()
+            let ver = (await prod).getVersao()
+            let version
+            if (ver?.versao !== undefined) {
+                version = ver?.versao
+            } else {
+                version = ""
+            }
+            let data
+            if (ver?.dataCadastro !== undefined) {
+                data = ver?.dataCadastro
+            } else {
+                data = new Date()
+            }
+            listaProdutos.push(new Produto(
+                (await prod).getCodigo(),
+                (await prod).getProduto(),
+                (await prod).getCategoria(),
+                (await prod).getPreco(),
+                (await prod).getDescricao(),
+                new ProdutoVersao(
+                    version,
+                    data
+                )
+            ))
         }
         return listaProdutos
-    }  
-    
-    async buscaCategoria(categoria : string): Promise<Array<Produto>>{
+    }
+
+    async buscaCategoria(categoria: string): Promise<Array<Produto>> {
 
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
 
@@ -110,7 +120,7 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
 
             if (!doc) {
                 return []
-            } 
+            }
             listaProdutos.push(
                 new Produto(
                     doc?.codigo,
@@ -125,9 +135,9 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
             )
         }
         return listaProdutos
-    } 
+    }
 
-     async remove(codigo : string) {
+    async remove(codigo: string) {
 
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
 
@@ -137,8 +147,8 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
                     codigo: codigo
                 }
             )
-        } catch(err) {
+        } catch (err) {
             throw new CustomError('Produto não encontrado com o codigo informado', 404, false, [])
         }
-    } 
+    }
 }

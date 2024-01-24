@@ -2,8 +2,8 @@ import {NextFunction, Request, Response} from 'express';
 import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
-import { ProdutoService } from 'domains/acesso/core/applications/services/produto.service';
-import { Produto } from 'domains/acesso/core/entities/produto';
+import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
+import { Produto } from 'domains/pedido/core/entities/produto';
 
 export class ProdutoController {
 

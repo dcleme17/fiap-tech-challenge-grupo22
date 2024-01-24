@@ -1,5 +1,5 @@
-import { Produto } from "domains/acesso/core/entities/produto"
-import { ProdutoVersao } from "domains/acesso/core/entities/produto.versao"
+import { Produto } from "domains/pedido/core/entities/produto"
+import { ProdutoVersao } from "domains/pedido/core/entities/produto.versao"
 
 export interface IProduto {
     adiciona: (produto: Produto) => Promise<ProdutoVersao | null>
@@ -7,5 +7,5 @@ export interface IProduto {
     buscaUltimaVersao: (codigo: string) => Promise<Produto | null>
     buscaCategoria: (categoria: string) => Promise<Array<Produto>>
     buscaListaProduto: () => Promise<Array<Produto>>
-    remove: (codigo : string)
+    remove: (codigo : string) => void
 }

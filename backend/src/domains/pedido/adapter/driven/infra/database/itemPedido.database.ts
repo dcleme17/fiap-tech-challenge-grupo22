@@ -1,7 +1,7 @@
-import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
-import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
-import { IItemPedido } from "domains/acesso/core/applications/ports/itemPedido.port";
-import { ItemPedidoVersao } from "domains/acesso/core/entities/itemPedido.versao";
+import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
+import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
+import { IItemPedido } from "domains/pedido/core/applications/ports/itemPedido.port";
+import { ItemPedidoVersao } from "domains/pedido/core/entities/itemPedido.versao";
 
 export class ItemPedidoDatabase extends MongoDB implements IItemPedido {
     

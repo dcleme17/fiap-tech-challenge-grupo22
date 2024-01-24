@@ -1,10 +1,10 @@
-import { Pedido } from "domains/acesso/core/entities/pedido";
-import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
-import { IPedido } from "domains/acesso/core/applications/ports/pedido.port";
-import { PedidoVersao } from "domains/acesso/core/entities/pedido.versao";
-import { ItemPedido } from "domains/acesso/core/entities/itemPedido";
-import { IItemPedido } from "domains/acesso/core/applications/ports/itemPedido.port";
-import { ItemPedidoVersao } from "domains/acesso/core/entities/itemPedido.versao";
+import { Pedido } from "domains/pedido/core/entities/pedido";
+import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
+import { IPedido } from "domains/pedido/core/applications/ports/pedido.port";
+import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
+import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
+import { IItemPedido } from "domains/pedido/core/applications/ports/itemPedido.port";
+import { ItemPedidoVersao } from "domains/pedido/core/entities/itemPedido.versao";
 
 export class PedidoDatabase extends MongoDB implements IPedido {
     
