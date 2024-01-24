@@ -1,6 +1,7 @@
 import {
     post_cliente, 
     put_cliente,
+    patch_cliente_nome,
     post_produto, 
     put_produto,
     get_pedido,
@@ -24,11 +25,6 @@ export const swagger = {
     ],
     definitions: {
         post_cliente,
-        put_cliente,
-        post_produto, 
-        put_produto,
-        get_pedido,
-        post_pedido,
-        put_pedido
+        put_cliente
     }
 }

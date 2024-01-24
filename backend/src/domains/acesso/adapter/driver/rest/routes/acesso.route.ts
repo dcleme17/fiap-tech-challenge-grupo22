@@ -94,6 +94,31 @@ acessoRoutes.get('/cliente/:cpf',
 
     controller.buscaUltimaVersao(request, next).then()
   });
+acessoRoutes.patch('/cliente/:cpf/nome',
+  param('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
+  body('nome').trim().isLength({ min: 4, max: 60 }),
+  (request: Request, _response: Response, next: NextFunction) => {
+
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Busca um cliente pelo CPF'
+        #swagger.description = 'Busca os dados de clientes pelo CPF'
+        #swagger.operationId = 'postcliente'
+        #swagger.deprecated = false
+        #swagger.tags = ['Acesso']
+        #swagger.parameters['body'] = { 
+                in: 'body', 
+                'schema': { $ref: '#/definitions/patch_cliente_nome' }
+        }        
+    */        
+
+    const database = new ClienteDatabase();
+    const service = new ClienteService(database)
+    const controller = new ClienteController(service)
+
+    controller.buscaUltimaVersao(request, next).then()
+  });
 
   acessoRoutes.post('/produto',
   body('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
