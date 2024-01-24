@@ -95,7 +95,117 @@
         "deprecated": false
       }
     },
-    "/api/lanchonete/produto": {
+    "/api/acesso/cliente/{cpf}/nome": {
+      "patch": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Busca um cliente pelo CPF",
+        "description": "Busca os dados de clientes pelo CPF",
+        "operationId": "postcliente",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/patch_cliente_nome"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/pedido/pedido": {
+      "post": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Cria um novo pedido",
+        "description": "Cria um novo pedido",
+        "operationId": "postpedido",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/post_pedido"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "lista todos os pedidos",
+        "description": "lista todos os pedidos",
+        "operationId": "getPedido",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/get_pedido"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/pedido/pedido/{codigoPedido}": {
+      "put": {
+        "tags": [
+          "Acesso"
+        ],
+        "summary": "Atualiza um pedido",
+        "description": "Atualiza os dados de um pedido pelo codigo",
+        "operationId": "putpedido",
+        "parameters": [
+          {
+            "name": "codigoPedido",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/put_pedido"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/produto/produto": {
       "post": {
         "tags": [
           "Acesso"
@@ -120,7 +230,7 @@
         "deprecated": false
       }
     },
-    "/api/lanchonete/produto/{codigo}": {
+    "/api/produto/produto/{codigo}": {
       "put": {
         "tags": [
           "Acesso"
@@ -173,7 +283,7 @@
         "deprecated": false
       }
     },
-    "/api/lanchonete/produto/{categoria}": {
+    "/api/produto/produto/{categoria}": {
       "get": {
         "tags": [
           "Acesso"
@@ -197,74 +307,20 @@
         "deprecated": false
       }
     },
-    "/api/lanchonete/pedido": {
+    "/api/pagamento/pagamento": {
       "post": {
         "tags": [
           "Acesso"
         ],
-        "summary": "Cria um novo pedido",
-        "description": "Cria um novo pedido",
-        "operationId": "postpedido",
+        "summary": "Cria um novo produto",
+        "description": "Cria um novo produto a partir das informações básicas",
+        "operationId": "postproduto",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/post_pedido"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "deprecated": false
-      },
-      "get": {
-        "tags": [
-          "Acesso"
-        ],
-        "summary": "lista todos os pedidos",
-        "description": "lista todos os pedidos",
-        "operationId": "getPedido",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/get_pedido"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/api/lanchonete/pedido/{codigoPedido}": {
-      "put": {
-        "tags": [
-          "Acesso"
-        ],
-        "summary": "Atualiza um pedido",
-        "description": "Atualiza os dados de um pedido pelo codigo",
-        "operationId": "putpedido",
-        "parameters": [
-          {
-            "name": "codigoPedido",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/put_pedido"
+              "$ref": "#/definitions/post_produto"
             }
           }
         ],
@@ -320,6 +376,332 @@
         "nome",
         "cpf",
         "email"
+      ]
+    },
+    "post_produto": {
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "string",
+          "example": "000001"
+        },
+        "produto": {
+          "type": "string",
+          "example": "hamburger"
+        },
+        "categoria": {
+          "type": "string",
+          "example": "lanches"
+        },
+        "preco": {
+          "type": "string",
+          "example": "25,99"
+        },
+        "descricao": {
+          "type": "string",
+          "example": "um delicioso hamburger feito com carne bovina"
+        }
+      },
+      "required": [
+        "codigo",
+        "produto",
+        "categoria",
+        "preco",
+        "descricao"
+      ]
+    },
+    "put_produto": {
+      "type": "object",
+      "properties": {
+        "produto": {
+          "type": "string",
+          "example": "beirute"
+        },
+        "categoria": {
+          "type": "string",
+          "example": "lanches"
+        },
+        "preco": {
+          "type": "string",
+          "example": "30,99"
+        },
+        "descricao": {
+          "type": "string",
+          "example": "um delicioso beirute"
+        }
+      },
+      "required": [
+        "produto",
+        "categoria",
+        "preco",
+        "descricao"
+      ]
+    },
+    "get_pedido": {
+      "type": "object",
+      "properties": {
+        "pedidos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "codigoPedido": {
+                "type": "string",
+                "example": "000002"
+              },
+              "cpf": {
+                "type": "string",
+                "example": "98765432120"
+              },
+              "data": {
+                "type": "string",
+                "example": "14/01/2023"
+              },
+              "horaEntrada": {
+                "type": "string",
+                "example": "16:00"
+              },
+              "horaSaida": {
+                "type": "string",
+                "example": "16:30"
+              },
+              "valor": {
+                "type": "string",
+                "example": "45,00"
+              },
+              "status": {
+                "type": "string",
+                "example": "Finalizado"
+              },
+              "itensPedidos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "codigoProduto": {
+                      "type": "string",
+                      "example": "000005"
+                    },
+                    "descricaoProduto": {
+                      "type": "string",
+                      "example": "MilkShake Chocolate"
+                    },
+                    "qtde": {
+                      "type": "string",
+                      "example": "1"
+                    },
+                    "valor": {
+                      "type": "string",
+                      "example": "15,00"
+                    },
+                    "observacao": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  },
+                  "required": [
+                    "codigoProduto",
+                    "descricaoProduto",
+                    "qtde",
+                    "valor",
+                    "observacao"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "codigoPedido",
+              "cpf",
+              "data",
+              "horaEntrada",
+              "horaSaida",
+              "valor",
+              "status",
+              "itensPedidos"
+            ]
+          }
+        }
+      },
+      "required": [
+        "pedidos"
+      ]
+    },
+    "post_pedido": {
+      "type": "object",
+      "properties": {
+        "pedidos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "codigoPedido": {
+                "type": "string",
+                "example": "000001"
+              },
+              "cpf": {
+                "type": "string",
+                "example": "12345678910"
+              },
+              "data": {
+                "type": "string",
+                "example": "13/01/2023"
+              },
+              "horaEntrada": {
+                "type": "string",
+                "example": "18:05"
+              },
+              "horaSaida": {
+                "type": "string",
+                "example": "18:15"
+              },
+              "valorPedido": {
+                "type": "string",
+                "example": "46,00"
+              },
+              "status": {
+                "type": "string",
+                "example": "Finalizado"
+              },
+              "itensPedidos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "codigoProduto": {
+                      "type": "string",
+                      "example": "000003"
+                    },
+                    "descricaoProduto": {
+                      "type": "string",
+                      "example": "Coca-cola"
+                    },
+                    "qtde": {
+                      "type": "string",
+                      "example": "2"
+                    },
+                    "valor": {
+                      "type": "string",
+                      "example": "8,00"
+                    },
+                    "observacao": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  },
+                  "required": [
+                    "codigoProduto",
+                    "descricaoProduto",
+                    "qtde",
+                    "valor",
+                    "observacao"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "codigoPedido",
+              "cpf",
+              "data",
+              "horaEntrada",
+              "horaSaida",
+              "valorPedido",
+              "status",
+              "itensPedidos"
+            ]
+          }
+        }
+      },
+      "required": [
+        "pedidos"
+      ]
+    },
+    "put_pedido": {
+      "type": "object",
+      "properties": {
+        "pedidos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "codigoPedido": {
+                "type": "string",
+                "example": "000001"
+              },
+              "cpf": {
+                "type": "string",
+                "example": "12345678910"
+              },
+              "data": {
+                "type": "string",
+                "example": "13/01/2023"
+              },
+              "horaEntrada": {
+                "type": "string",
+                "example": "18:05"
+              },
+              "horaSaida": {
+                "type": "string",
+                "example": "18:15"
+              },
+              "valorPedido": {
+                "type": "string",
+                "example": "46,00"
+              },
+              "status": {
+                "type": "string",
+                "example": "Finalizado"
+              },
+              "itensPedidos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "codigoProduto": {
+                      "type": "string",
+                      "example": "000003"
+                    },
+                    "descricaoProduto": {
+                      "type": "string",
+                      "example": "Coca-cola"
+                    },
+                    "qtde": {
+                      "type": "string",
+                      "example": "2"
+                    },
+                    "valor": {
+                      "type": "string",
+                      "example": "8,00"
+                    },
+                    "observacao": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  },
+                  "required": [
+                    "codigoProduto",
+                    "descricaoProduto",
+                    "qtde",
+                    "valor",
+                    "observacao"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "codigoPedido",
+              "cpf",
+              "data",
+              "horaEntrada",
+              "horaSaida",
+              "valorPedido",
+              "status",
+              "itensPedidos"
+            ]
+          }
+        }
+      },
+      "required": [
+        "pedidos"
       ]
     }
   }
