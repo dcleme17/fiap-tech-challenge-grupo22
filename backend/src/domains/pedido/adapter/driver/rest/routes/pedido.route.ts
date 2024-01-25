@@ -56,8 +56,9 @@ pedidoRoutes.post('/pedido',
   body('horaSaida').trim().isLength({ min: 1, max: 10 }).notEmpty(),
   body('valorPedido').trim().notEmpty(),
   body('status').trim().isLength({ min: 5, max: 20 }),
+  body('itensPedidos').notEmpty(),
   (request: Request, _response: Response, next: NextFunction) => {
-
+    
     /**
         @Swagger
         #swagger.auto = true

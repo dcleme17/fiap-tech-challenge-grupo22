@@ -3,7 +3,6 @@ import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
 import { IPedido } from "domains/pedido/core/applications/ports/pedido.port";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
-import { IItemPedido } from "domains/pedido/core/applications/ports/itemPedido.port";
 import { ItemPedidoVersao } from "domains/pedido/core/entities/itemPedido.versao";
 
 export class PedidoDatabase extends MongoDB implements IPedido {
@@ -32,18 +31,24 @@ export class PedidoDatabase extends MongoDB implements IPedido {
     }
 
     async adicionaItem(itemPedidos : Array<ItemPedido>): Promise<Array<ItemPedidoVersao> | null> {
-        
+
         const itemPedidoRef = await this.getCollection('lanchonete', 'itemPedido').then();
         let itemVersao = []
-
+       
         const result = await itemPedidoRef.insertMany(itemPedidos)
-        console.log("item adicionado")
+
+        console.log("Pedido adicionado!")
+
         itemVersao.push(new ItemPedidoVersao(result.insertedIds.toString(), new Date()))
         return itemVersao
     }
     
     async atualiza(pedido: Pedido): Promise<PedidoVersao | null> {
         return this.adiciona(pedido);
+    }
+
+    async atualizaItem(itemPedidos : Array<ItemPedido>): Promise<Array<ItemPedidoVersao> | null> {
+        return this.adicionaItem(itemPedidos);
     }
 
     async buscaUltimaVersao(codigoPedido: string): Promise<Pedido | null>{

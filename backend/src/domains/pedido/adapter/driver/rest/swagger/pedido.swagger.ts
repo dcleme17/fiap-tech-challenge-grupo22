@@ -10,6 +10,7 @@ export const get_pedido = {
             $status: "Finalizado",
             $itensPedidos: [
                 {
+                    $codigoPedido: "000002",
                     $codigoProduto: "000001",
                     $descricaoProduto: "Hamburguer",
                     $qtde: "2",
@@ -17,6 +18,7 @@ export const get_pedido = {
                     $observacao: "Sem cebola"
                 },
                 {
+                    $codigoPedido: "000002",
                     $codigoProduto: "000005",
                     $descricaoProduto: "MilkShake Chocolate",
                     $qtde: "1",
@@ -34,10 +36,11 @@ export const post_pedido = {
     $data: "13/01/2023",
     $horaEntrada: "18:05",
     $horaSaida: "18:15",
-    $valorPedido: "46,00",
+    $valorPedido: "20,00",
     $status: "Finalizado",
     $itensPedidos: [
         {
+            $codigoPedido: "000001",
             $codigoProduto: "000001",
             $descricaoProduto: "Hamburguer",
             $qtde: "1",
@@ -48,7 +51,6 @@ export const post_pedido = {
 } 
 
 export const put_pedido = {
-    $codigoPedido: "000001",
     $cpf: "12345678910",
     $data: "13/01/2023",
     $horaEntrada: "18:05",
@@ -57,6 +59,7 @@ export const put_pedido = {
     $status: "Finalizado",
     $itensPedidos: [
         {
+            $codigoPedido: "000001",
             $codigoProduto: "000001",
             $descricaoProduto: "Hamburguer",
             $qtde: "1",

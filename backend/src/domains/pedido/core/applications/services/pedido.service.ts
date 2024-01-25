@@ -22,23 +22,23 @@ export class PedidoService {
         return retorno
     }
 
-    async atualiza(pedido: Pedido): Promise<PedidoVersao> {
+    async atualiza(pedido: Pedido, itemPedido: Array<ItemPedido>): Promise<PedidoVersao> {
 
-        const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
+        //const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
 
-        if (ultimaVersao) {
+        //if (ultimaVersao) {
 
-            if (pedido.equals(ultimaVersao)) {
-                throw new CustomError('Nenhuma informação para atualizar', 400, false, [])
-            }
-        } else {
-            throw new CustomError('Pedido não encontrado', 404, false, [])
-        }
-
-        return await this.database.atualiza(pedido).then()
+        //if (pedido.equals(ultimaVersao)) {
+                //throw new CustomError('Nenhuma informação para atualizar', 400, false, [])
+            //}
+        //} else {
+            //throw new CustomError('Pedido não encontrado', 404, false, [])
+            var retorno = await this.database.adiciona(pedido).then()
+            await this.database.atualizaItem(itemPedido).then()
+            return retorno
     }
 
-    async buscaUltimaVersao(codigoPedido: string, cpf : string): Promise<Pedido> {
+    async buscaUltimaVersao(codigoPedido: string ): Promise<Pedido> {
 
         const ultimaVersao = await this.database.buscaUltimaVersao(codigoPedido)
 
