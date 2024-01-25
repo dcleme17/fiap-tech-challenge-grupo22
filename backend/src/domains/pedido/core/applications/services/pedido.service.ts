@@ -12,40 +12,44 @@ export class PedidoService {
 
     async adiciona(pedido: Pedido, itemPedido: Array<ItemPedido>): Promise<PedidoVersao> {
 
-        //const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
+        try {
+            const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
 
-        //if (ultimaVersao) {
-            //throw new CustomError('Já existe pedido para esse Codigo', 400, false, [])
-        //}
-        var retorno = await this.database.adiciona(pedido).then()
-        await this.database.adicionaItem(itemPedido).then()
-        return retorno
-    }
+            if (ultimaVersao) {
+                throw new CustomError('Já existe pedido para esse Codigo', 400, false, [])
+            }
+        } catch (err) {
+            console.log ("Nenhum pedido encontrado")
+        }    
+            var retorno = await this.database.adiciona(pedido).then()
+            await this.database.adicionaItem(itemPedido).then()
+            return retorno
+        }
 
     async atualiza(pedido: Pedido, itemPedido: Array<ItemPedido>): Promise<PedidoVersao> {
 
-        //const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
+        const ultimaVersao = await this.database.buscaUltimaVersao(pedido.getCodigoPedido())
 
-        //if (ultimaVersao) {
-
-        //if (pedido.equals(ultimaVersao)) {
-                //throw new CustomError('Nenhuma informação para atualizar', 400, false, [])
-            //}
-        //} else {
-            //throw new CustomError('Pedido não encontrado', 404, false, [])
+        if (ultimaVersao) {
+            if (pedido.equals(ultimaVersao)) {
+                throw new CustomError('Nenhuma informação para atualizar', 400, false, [])
+            }
+        } else {
+            throw new CustomError('Pedido não encontrado', 404, false, [])
+        }
             var retorno = await this.database.adiciona(pedido).then()
             await this.database.atualizaItem(itemPedido).then()
             return retorno
     }
 
-    async buscaUltimaVersao(codigoPedido: string ): Promise<Pedido> {
+    async buscaUltimaVersao(codigoPedido: string): Promise<Pedido> {
 
         const ultimaVersao = await this.database.buscaUltimaVersao(codigoPedido)
 
         if (ultimaVersao) {
             return ultimaVersao
         } else {
-            throw new CustomError('Pedido não encontrado com o codigo informado', 404, false, [])
+            throw new CustomError('Pedido não encontrado com o código informado', 404, false, [])
         }
     }
 }

@@ -50,7 +50,7 @@ export class PedidoController {
             throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
         }
     
-        const {codigoPedido, cpf} = request.body
+        const {codigoPedido} = request.body
        
         try {
             next( new CustomResponse(200, 'Pedido adicionado', await this.service.buscaUltimaVersao(codigoPedido)))
