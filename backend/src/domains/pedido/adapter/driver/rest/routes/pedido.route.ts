@@ -4,14 +4,9 @@ import { body, param } from 'express-validator'
 import { PedidoService } from 'domains/pedido/core/applications/services/pedido.service';
 import { PedidoDatabase } from 'domains/pedido/adapter/driven/infra/database/pedido.database';
 
-const pedidoRoutes = Router();
+const router = Router();
 
-pedidoRoutes.get('/', (_request: Request, response: Response, _next: NextFunction) => {
-  // #swagger.ignore = true
-  return response.json("Lanchonetes OK")
-});
-
-pedidoRoutes.post('/pedido',
+router.post('/v1',
   body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
   body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
   body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
@@ -29,7 +24,7 @@ pedidoRoutes.post('/pedido',
         #swagger.description = 'Cria um novo pedido'
         #swagger.operationId = 'postpedido'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pedido']
         #swagger.parameters['body'] = {
                 in: 'body',
                 'schema': { $ref: '#/definitions/post_pedido'  }
@@ -48,7 +43,7 @@ pedidoRoutes.post('/pedido',
     //controllerItem.adiciona(request, next).then()
   });
 
-  pedidoRoutes.put('/pedido/:codigoPedido',
+  router.put('/v1/:codigoPedido',
   param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
   body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
   body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
@@ -66,7 +61,7 @@ pedidoRoutes.post('/pedido',
         #swagger.description = 'Atualiza os dados de um pedido pelo codigo'
         #swagger.operationId = 'putpedido'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pedido']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/put_pedido' }
@@ -80,7 +75,7 @@ pedidoRoutes.post('/pedido',
     controller.atualiza(request, next).then()
   });
 
-  pedidoRoutes.get('/pedido',
+  router.get('/v1',
   body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
   body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
   body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
@@ -97,7 +92,7 @@ pedidoRoutes.post('/pedido',
       #swagger.description = 'lista todos os pedidos'
       #swagger.operationId = 'getPedido'
       #swagger.deprecated = false
-      #swagger.tags = ['Acesso']
+      #swagger.tags = ['Pedido']
       #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/get_pedido' }
@@ -111,4 +106,4 @@ pedidoRoutes.post('/pedido',
   controller.buscaUltimaVersao(request, next).then()
 });
 
-export default pedidoRoutes;
+export default router;

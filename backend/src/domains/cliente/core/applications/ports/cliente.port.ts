@@ -1,5 +1,5 @@
-import { Cliente } from "domains/acesso/core/entities/cliente"
-import { ClienteVersao } from "domains/acesso/core/entities/cliente.versao"
+import { Cliente } from "domains/cliente/core/entities/cliente"
+import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao"
 
 export interface ICliente {
     adiciona: (cliente: Cliente) => Promise<ClienteVersao | null>

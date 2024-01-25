@@ -5,7 +5,8 @@
   "main": "src/server.config.ts",
   "scripts": {
     "dev": "tsx watch src/application",
-    "swagger": "tsx watch src/application.ts",
+    "start": "tsx src/configuration/server.config.ts",
+    "swagger": "tsx watch src/swagger.ts",
     "build": "tsc ",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix"

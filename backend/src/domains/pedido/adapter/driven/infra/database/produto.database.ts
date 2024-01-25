@@ -1,5 +1,5 @@
 import { Produto } from "domains/pedido/core/entities/produto";
-import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
+import { MongoDB } from "domains/suporte/infra/database/mongodb";
 import { IProduto } from "domains/pedido/core/applications/ports/produto.port";
 import { ProdutoVersao } from "domains/pedido/core/entities/produto.versao";
 import { CustomError } from "domains/suporte/entities/custom.error";

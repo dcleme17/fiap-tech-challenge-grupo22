@@ -2,7 +2,7 @@ import {
     post_cliente, 
     put_cliente,
 
-} from 'domains/acesso/adapter/driver/rest/swagger/acesso.swagger'
+} from 'domains/cliente/adapter/driver/rest/swagger/acesso.swagger'
 
 import {
     post_produto, 
@@ -17,18 +17,28 @@ import {
 
 } from 'domains/pedido/adapter/driver/rest/swagger/pedido.swagger'
 
+console.info(process.env.PORT)
+
 export const swagger = {
+    swagger: "2.0",
     info: {
         version: '1.0.0',           
         title: 'Tech Challenge Fiap',              
         description: 'Conjuntos dde recursos e operações do Tech Challenge da FIAP'
     },
-    host: 'localhost:3000',
+    host: `localhost:3000`,
     tags: [                   
         {
-            name: 'Acesso',             
-            description: 'APIs do domínio de Acesso'       
-        },
+            name: 'Cliente',             
+            description: 'APIs do domínio de Clientes'       
+        },  {
+            name: 'Pedido',             
+            description: 'APIs do domínio de Pedidos'       
+        },  {
+            name: 'Pagamento',             
+            description: 'APIs do domínio de Pagamento'       
+        }
+        
     ],
     definitions: {
         post_cliente,

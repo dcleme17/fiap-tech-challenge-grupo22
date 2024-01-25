@@ -4,14 +4,14 @@ import { body, param } from 'express-validator'
 import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
 import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
 
-const pagamentoRoutes = Router();
+const router = Router();
 
-pagamentoRoutes.get('/', (_request: Request, response: Response, _next: NextFunction) => {
+router.get('/', (_request: Request, response: Response, _next: NextFunction) => {
   // #swagger.ignore = true
   return response.json("Pagamentos OK")
 });
 
-pagamentoRoutes.post('/pagamento',
+router.post('/',
   body('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
   body('produto').trim().isLength({ min: 4, max: 60 }).notEmpty(),
   body('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
@@ -26,7 +26,7 @@ pagamentoRoutes.post('/pagamento',
         #swagger.description = 'Cria um novo produto a partir das informações básicas'
         #swagger.operationId = 'postproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pagamento']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/post_produto' }
@@ -40,4 +40,4 @@ pagamentoRoutes.post('/pagamento',
     controller.adiciona(request, next).then()
   });
 
-  export default pagamentoRoutes;
+  export default router;

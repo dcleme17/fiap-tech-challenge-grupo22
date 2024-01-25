@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from 'express';
+import {NextFunction, Request} from 'express';
 import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
@@ -44,15 +44,15 @@ export class ProdutoController {
     }
 
     async buscaUltimaVersao(request: Request, next: NextFunction): Promise<void> {
-        const result = validationResult(request)
-
-        if (!result.isEmpty()) {
-            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
-        }
-    
-        const {codigo} = request.params
-
         try {
+            const result = validationResult(request)
+
+            if (!result.isEmpty()) {
+                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            }
+        
+            const {codigo} = request.params
+                        
             next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaUltimaVersao(codigo)))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
@@ -60,41 +60,42 @@ export class ProdutoController {
     }  
     
     async buscaProduto(request: Request, next: NextFunction): Promise<void> {
-        const result = validationResult(request)
+        try {
+            const result = validationResult(request)
 
-        if (!result.isEmpty()) {
-            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
-        }
-    
-        const {categoria} = request.params
+            if (!result.isEmpty()) {
+                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            }
 
-        if(categoria.toLowerCase()=='todos') {
-            try {
-                next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaListaProduto()))
-            } catch (err){
-                next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
-            } 
-        } else {
-            try {
-                next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaCategoria(categoria)))
-            } catch (err){
-                next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
-            } 
-        }
+            /** 
+             * Isso daqui é uma gambiarra para poder acessar os parametros 
+             * passados por query sem precisar fazer cast um por um
+             * Obrigado, de nada. 
+             * */
+            const { categoria } = request.query as any
 
-               
+            if(categoria) {
+                next( new CustomResponse(200, 'Busca de produto por categoria', await this.service.buscaCategoria(categoria)))
+
+            } else {
+                next( new CustomResponse(200, 'Listagem de produto', await this.service.buscaListaProduto()))
+            }
+
+        } catch (err){
+            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+        } 
+
     }  
 
     async remove(request: Request, next: NextFunction): Promise<void> {
-        const result = validationResult(request)
-
-        if (!result.isEmpty()) {
-            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
-        }
-    
-        const {codigo} = request.params
-
         try {
+            const result = validationResult(request)
+
+            if (!result.isEmpty()) {
+                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            }
+        
+            const {codigo} = request.params            
             next( new CustomResponse(200, 'Produto removido', await this.service.remove(codigo)))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))

@@ -1,5 +1,5 @@
 import { Pedido } from "domains/pedido/core/entities/pedido";
-import { MongoDB } from "domains/pedido/adapter/driven/infra/database/mongodb";
+import { MongoDB } from "domains/suporte/infra/database/mongodb";
 import { IPedido } from "domains/pedido/core/applications/ports/pedido.port";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { ItemPedido } from "domains/pedido/core/entities/itemPedido";

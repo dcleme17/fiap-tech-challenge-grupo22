@@ -5,6 +5,5 @@ export const post_cliente = {
 }
 export const put_cliente = {
     $nome: "Daniel CLmente",
-    $cpf: "37255731821",
     $email: "dcleme17@gmail.com"
 }

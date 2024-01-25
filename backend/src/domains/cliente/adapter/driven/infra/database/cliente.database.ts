@@ -1,7 +1,7 @@
-import { Cliente } from "domains/acesso/core/entities/cliente";
-import { MongoDB } from "domains/acesso/adapter/driven/infra/database/mongodb";
-import { ICliente } from "domains/acesso/core/applications/ports/cliente.port";
-import { ClienteVersao } from "domains/acesso/core/entities/cliente.versao";
+import { Cliente } from "domains/cliente/core/entities/cliente";
+import { MongoDB } from "domains/suporte/infra/database/mongodb";
+import { ICliente } from "domains/cliente/core/applications/ports/cliente.port";
+import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao";
 
 export class ClienteDatabase extends MongoDB implements ICliente {
     

@@ -9,18 +9,26 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "Acesso",
-      "description": "APIs do domínio de Acesso"
+      "name": "Cliente",
+      "description": "APIs do domínio de Clientes"
+    },
+    {
+      "name": "Pedido",
+      "description": "APIs do domínio de Pedidos"
+    },
+    {
+      "name": "Pagamento",
+      "description": "APIs do domínio de Pagamento"
     }
   ],
   "schemes": [
     "http"
   ],
   "paths": {
-    "/api/acesso/cliente": {
+    "/api/clientes/v1": {
       "post": {
         "tags": [
-          "Acesso"
+          "Cliente"
         ],
         "summary": "Cria um novo cliente",
         "description": "Cria um novo cliente a partir das informações básicas",
@@ -42,10 +50,10 @@
         "deprecated": false
       }
     },
-    "/api/acesso/cliente/{cpf}": {
+    "/api/clientes/v1/{cpf}": {
       "put": {
         "tags": [
-          "Acesso"
+          "Cliente"
         ],
         "summary": "Atualiza um novo cliente",
         "description": "Atualiza os dados de um cliente pelo CPF",
@@ -74,7 +82,7 @@
       },
       "get": {
         "tags": [
-          "Acesso"
+          "Cliente"
         ],
         "summary": "Busca um cliente pelo CPF",
         "description": "Busca os dados de clientes pelo CPF",
@@ -95,41 +103,10 @@
         "deprecated": false
       }
     },
-    "/api/acesso/cliente/{cpf}/nome": {
-      "patch": {
-        "tags": [
-          "Acesso"
-        ],
-        "summary": "Busca um cliente pelo CPF",
-        "description": "Busca os dados de clientes pelo CPF",
-        "operationId": "postcliente",
-        "parameters": [
-          {
-            "name": "cpf",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/patch_cliente_nome"
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/api/pedido/pedido": {
+    "/api/pedidos/v1": {
       "post": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "Cria um novo pedido",
         "description": "Cria um novo pedido",
@@ -152,7 +129,7 @@
       },
       "get": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "lista todos os pedidos",
         "description": "lista todos os pedidos",
@@ -174,10 +151,10 @@
         "deprecated": false
       }
     },
-    "/api/pedido/pedido/{codigoPedido}": {
+    "/api/pedidos/v1/{codigoPedido}": {
       "put": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "Atualiza um pedido",
         "description": "Atualiza os dados de um pedido pelo codigo",
@@ -205,10 +182,10 @@
         "deprecated": false
       }
     },
-    "/api/produto/produto": {
+    "/api/produtos/v1": {
       "post": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "Cria um novo produto",
         "description": "Cria um novo produto a partir das informações básicas",
@@ -228,12 +205,34 @@
           }
         },
         "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Pedido"
+        ],
+        "summary": "busca produtos por categoria",
+        "description": "busca produtos por categoria",
+        "operationId": "getProduto",
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "query",
+            "description": "Categoria que o produto pertence",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "deprecated": false
       }
     },
-    "/api/produto/produto/{codigo}": {
+    "/api/produtos/v1/{codigo}": {
       "put": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "Atualiza um novo produto",
         "description": "Atualiza os dados de um produto pelo codigo",
@@ -262,7 +261,7 @@
       },
       "delete": {
         "tags": [
-          "Acesso"
+          "Pedido"
         ],
         "summary": "Deleta um produto",
         "description": "Deleta os dados de um produto pelo codigo",
@@ -283,34 +282,10 @@
         "deprecated": false
       }
     },
-    "/api/produto/produto/{categoria}": {
-      "get": {
-        "tags": [
-          "Acesso"
-        ],
-        "summary": "busca produtos por categoria",
-        "description": "busca produtos por categoria",
-        "operationId": "getProduto",
-        "parameters": [
-          {
-            "name": "categoria",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/api/pagamento/pagamento": {
+    "/api/pagamentos/": {
       "post": {
         "tags": [
-          "Acesso"
+          "Pagamento"
         ],
         "summary": "Cria um novo produto",
         "description": "Cria um novo produto a partir das informações básicas",
@@ -363,10 +338,6 @@
           "type": "string",
           "example": "Daniel CLmente"
         },
-        "cpf": {
-          "type": "string",
-          "example": "37255731821"
-        },
         "email": {
           "type": "string",
           "example": "dcleme17@gmail.com"
@@ -374,7 +345,6 @@
       },
       "required": [
         "nome",
-        "cpf",
         "email"
       ]
     },
@@ -478,13 +448,10 @@
                 "items": {
                   "type": "object",
                   "properties": {
-<<<<<<< HEAD
                     "codigoPedido": {
                       "type": "string",
                       "example": "000002"
                     },
-=======
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
                     "codigoProduto": {
                       "type": "string",
                       "example": "000005"
@@ -507,10 +474,7 @@
                     }
                   },
                   "required": [
-<<<<<<< HEAD
                     "codigoPedido",
-=======
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
                     "codigoProduto",
                     "descricaoProduto",
                     "qtde",
@@ -540,7 +504,6 @@
     "post_pedido": {
       "type": "object",
       "properties": {
-<<<<<<< HEAD
         "codigoPedido": {
           "type": "string",
           "example": "000001"
@@ -570,9 +533,6 @@
           "example": "Finalizado"
         },
         "itensPedidos": {
-=======
-        "pedidos": {
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
           "type": "array",
           "items": {
             "type": "object",
@@ -581,7 +541,6 @@
                 "type": "string",
                 "example": "000001"
               },
-<<<<<<< HEAD
               "codigoProduto": {
                 "type": "string",
                 "example": "000001"
@@ -601,91 +560,20 @@
               "observacao": {
                 "type": "string",
                 "example": "Sem cebola"
-=======
-              "cpf": {
-                "type": "string",
-                "example": "12345678910"
-              },
-              "data": {
-                "type": "string",
-                "example": "13/01/2023"
-              },
-              "horaEntrada": {
-                "type": "string",
-                "example": "18:05"
-              },
-              "horaSaida": {
-                "type": "string",
-                "example": "18:15"
-              },
-              "valorPedido": {
-                "type": "string",
-                "example": "46,00"
-              },
-              "status": {
-                "type": "string",
-                "example": "Finalizado"
-              },
-              "itensPedidos": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "codigoProduto": {
-                      "type": "string",
-                      "example": "000003"
-                    },
-                    "descricaoProduto": {
-                      "type": "string",
-                      "example": "Coca-cola"
-                    },
-                    "qtde": {
-                      "type": "string",
-                      "example": "2"
-                    },
-                    "valor": {
-                      "type": "string",
-                      "example": "8,00"
-                    },
-                    "observacao": {
-                      "type": "string",
-                      "example": ""
-                    }
-                  },
-                  "required": [
-                    "codigoProduto",
-                    "descricaoProduto",
-                    "qtde",
-                    "valor",
-                    "observacao"
-                  ]
-                }
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
               }
             },
             "required": [
               "codigoPedido",
-<<<<<<< HEAD
               "codigoProduto",
               "descricaoProduto",
               "qtde",
               "valor",
               "observacao"
-=======
-              "cpf",
-              "data",
-              "horaEntrada",
-              "horaSaida",
-              "valorPedido",
-              "status",
-              "itensPedidos"
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
             ]
           }
         }
       },
       "required": [
-<<<<<<< HEAD
         "codigoPedido",
         "cpf",
         "data",
@@ -694,15 +582,11 @@
         "valorPedido",
         "status",
         "itensPedidos"
-=======
-        "pedidos"
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
       ]
     },
     "put_pedido": {
       "type": "object",
       "properties": {
-<<<<<<< HEAD
         "cpf": {
           "type": "string",
           "example": "12345678910"
@@ -728,9 +612,6 @@
           "example": "Finalizado"
         },
         "itensPedidos": {
-=======
-        "pedidos": {
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
           "type": "array",
           "items": {
             "type": "object",
@@ -739,7 +620,6 @@
                 "type": "string",
                 "example": "000001"
               },
-<<<<<<< HEAD
               "codigoProduto": {
                 "type": "string",
                 "example": "000001"
@@ -759,91 +639,20 @@
               "observacao": {
                 "type": "string",
                 "example": "Sem cebola"
-=======
-              "cpf": {
-                "type": "string",
-                "example": "12345678910"
-              },
-              "data": {
-                "type": "string",
-                "example": "13/01/2023"
-              },
-              "horaEntrada": {
-                "type": "string",
-                "example": "18:05"
-              },
-              "horaSaida": {
-                "type": "string",
-                "example": "18:15"
-              },
-              "valorPedido": {
-                "type": "string",
-                "example": "46,00"
-              },
-              "status": {
-                "type": "string",
-                "example": "Finalizado"
-              },
-              "itensPedidos": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "codigoProduto": {
-                      "type": "string",
-                      "example": "000003"
-                    },
-                    "descricaoProduto": {
-                      "type": "string",
-                      "example": "Coca-cola"
-                    },
-                    "qtde": {
-                      "type": "string",
-                      "example": "2"
-                    },
-                    "valor": {
-                      "type": "string",
-                      "example": "8,00"
-                    },
-                    "observacao": {
-                      "type": "string",
-                      "example": ""
-                    }
-                  },
-                  "required": [
-                    "codigoProduto",
-                    "descricaoProduto",
-                    "qtde",
-                    "valor",
-                    "observacao"
-                  ]
-                }
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
               }
             },
             "required": [
               "codigoPedido",
-<<<<<<< HEAD
               "codigoProduto",
               "descricaoProduto",
               "qtde",
               "valor",
               "observacao"
-=======
-              "cpf",
-              "data",
-              "horaEntrada",
-              "horaSaida",
-              "valorPedido",
-              "status",
-              "itensPedidos"
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
             ]
           }
         }
       },
       "required": [
-<<<<<<< HEAD
         "cpf",
         "data",
         "horaEntrada",
@@ -851,9 +660,6 @@
         "valorPedido",
         "status",
         "itensPedidos"
-=======
-        "pedidos"
->>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
       ]
     }
   }

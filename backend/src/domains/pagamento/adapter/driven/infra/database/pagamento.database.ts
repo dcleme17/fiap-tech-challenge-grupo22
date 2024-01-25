@@ -1,4 +1,4 @@
-import { MongoDB } from "domains/pagamento/adapter/driven/infra/database/mongodb";
+import { MongoDB } from "domains/suporte/infra/database/mongodb";
 import { IPagamento } from "domains/pagamento/core/applications/ports/pagamento.port";
 import { Pagamento } from "domains/pagamento/core/entities/pagamento";
 import { PagamentoVersao } from "domains/pagamento/core/entities/pagamento.versao";

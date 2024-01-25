@@ -1,6 +1,6 @@
-import { Cliente } from "domains/acesso/core/entities/cliente";
-import { ClienteVersao } from "domains/acesso/core/entities/cliente.versao";
-import { ClienteDatabase } from "domains/acesso/adapter/driven/infra/database/cliente.database"
+import { Cliente } from "domains/cliente/core/entities/cliente";
+import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao";
+import { ClienteDatabase } from "domains/cliente/adapter/driven/infra/database/cliente.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
 export class ClienteService {

@@ -1,17 +1,12 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { ProdutoController } from "domains/pedido/adapter/driver/rest/controllers/produto.controller"
-import { body, param } from 'express-validator'
+import { body, param, query } from 'express-validator'
 import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
 import { ProdutoDatabase } from 'domains/pedido/adapter/driven/infra/database/produto.database';
 
-const produtoRoutes = Router();
+const router = Router();
 
-produtoRoutes.get('/', (_request: Request, response: Response, _next: NextFunction) => {
-  // #swagger.ignore = true
-  return response.json("Produtos OK")
-});
-
-produtoRoutes.post('/produto',
+router.post('/v1',
   body('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
   body('produto').trim().isLength({ min: 4, max: 60 }).notEmpty(),
   body('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
@@ -26,7 +21,7 @@ produtoRoutes.post('/produto',
         #swagger.description = 'Cria um novo produto a partir das informações básicas'
         #swagger.operationId = 'postproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pedido']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/post_produto' }
@@ -40,7 +35,7 @@ produtoRoutes.post('/produto',
     controller.adiciona(request, next).then()
   });
 
-produtoRoutes.put('/produto/:codigo',
+router.put('/v1/:codigo',
   param('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
   body('produto').trim().isLength({ min: 4, max: 60 }).notEmpty(),
   body('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
@@ -55,7 +50,7 @@ produtoRoutes.put('/produto/:codigo',
         #swagger.description = 'Atualiza os dados de um produto pelo codigo'
         #swagger.operationId = 'postproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pedido']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/put_produto' }
@@ -69,7 +64,7 @@ produtoRoutes.put('/produto/:codigo',
     controller.atualiza(request, next).then()
   });
 
-produtoRoutes.delete('/produto/:codigo',
+router.delete('/v1/:codigo',
   param('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
   (request: Request, _response: Response, next: NextFunction) => {
 
@@ -80,7 +75,7 @@ produtoRoutes.delete('/produto/:codigo',
         #swagger.description = 'Deleta os dados de um produto pelo codigo'
         #swagger.operationId = 'deleteproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Acesso']
+        #swagger.tags = ['Pedido']
     */    
 
     const database = new ProdutoDatabase();
@@ -90,8 +85,8 @@ produtoRoutes.delete('/produto/:codigo',
     controller.remove(request, next).then()
   });
 
-produtoRoutes.get('/produto/:categoria',
-  param('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
+router.get('/v1',
+  query('categoria').notEmpty().trim().isLength({ min: 4, max: 60 }).optional(),
 (request: Request, _response: Response, next: NextFunction) => {
 
   /**
@@ -101,7 +96,12 @@ produtoRoutes.get('/produto/:categoria',
       #swagger.description = 'busca produtos por categoria'
       #swagger.operationId = 'getProduto'
       #swagger.deprecated = false
-      #swagger.tags = ['Acesso']
+      #swagger.tags = ['Pedido']
+      #swagger.parameters['categoria'] = { 
+        in: 'query',
+        description: 'Categoria que o produto pertence',
+        type: 'string'
+      }
   */        
 
   const database = new ProdutoDatabase();
@@ -111,4 +111,4 @@ produtoRoutes.get('/produto/:categoria',
   controller.buscaProduto(request, next).then()
 });
 
-export default produtoRoutes;
+export default router;
