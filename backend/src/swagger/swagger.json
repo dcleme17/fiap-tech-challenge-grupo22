@@ -478,10 +478,13 @@
                 "items": {
                   "type": "object",
                   "properties": {
+<<<<<<< HEAD
                     "codigoPedido": {
                       "type": "string",
                       "example": "000002"
                     },
+=======
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
                     "codigoProduto": {
                       "type": "string",
                       "example": "000005"
@@ -504,7 +507,10 @@
                     }
                   },
                   "required": [
+<<<<<<< HEAD
                     "codigoPedido",
+=======
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
                     "codigoProduto",
                     "descricaoProduto",
                     "qtde",
@@ -534,6 +540,7 @@
     "post_pedido": {
       "type": "object",
       "properties": {
+<<<<<<< HEAD
         "codigoPedido": {
           "type": "string",
           "example": "000001"
@@ -563,6 +570,9 @@
           "example": "Finalizado"
         },
         "itensPedidos": {
+=======
+        "pedidos": {
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
           "type": "array",
           "items": {
             "type": "object",
@@ -571,6 +581,7 @@
                 "type": "string",
                 "example": "000001"
               },
+<<<<<<< HEAD
               "codigoProduto": {
                 "type": "string",
                 "example": "000001"
@@ -590,20 +601,91 @@
               "observacao": {
                 "type": "string",
                 "example": "Sem cebola"
+=======
+              "cpf": {
+                "type": "string",
+                "example": "12345678910"
+              },
+              "data": {
+                "type": "string",
+                "example": "13/01/2023"
+              },
+              "horaEntrada": {
+                "type": "string",
+                "example": "18:05"
+              },
+              "horaSaida": {
+                "type": "string",
+                "example": "18:15"
+              },
+              "valorPedido": {
+                "type": "string",
+                "example": "46,00"
+              },
+              "status": {
+                "type": "string",
+                "example": "Finalizado"
+              },
+              "itensPedidos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "codigoProduto": {
+                      "type": "string",
+                      "example": "000003"
+                    },
+                    "descricaoProduto": {
+                      "type": "string",
+                      "example": "Coca-cola"
+                    },
+                    "qtde": {
+                      "type": "string",
+                      "example": "2"
+                    },
+                    "valor": {
+                      "type": "string",
+                      "example": "8,00"
+                    },
+                    "observacao": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  },
+                  "required": [
+                    "codigoProduto",
+                    "descricaoProduto",
+                    "qtde",
+                    "valor",
+                    "observacao"
+                  ]
+                }
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
               }
             },
             "required": [
               "codigoPedido",
+<<<<<<< HEAD
               "codigoProduto",
               "descricaoProduto",
               "qtde",
               "valor",
               "observacao"
+=======
+              "cpf",
+              "data",
+              "horaEntrada",
+              "horaSaida",
+              "valorPedido",
+              "status",
+              "itensPedidos"
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
             ]
           }
         }
       },
       "required": [
+<<<<<<< HEAD
         "codigoPedido",
         "cpf",
         "data",
@@ -612,11 +694,15 @@
         "valorPedido",
         "status",
         "itensPedidos"
+=======
+        "pedidos"
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
       ]
     },
     "put_pedido": {
       "type": "object",
       "properties": {
+<<<<<<< HEAD
         "cpf": {
           "type": "string",
           "example": "12345678910"
@@ -642,6 +728,9 @@
           "example": "Finalizado"
         },
         "itensPedidos": {
+=======
+        "pedidos": {
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
           "type": "array",
           "items": {
             "type": "object",
@@ -650,6 +739,7 @@
                 "type": "string",
                 "example": "000001"
               },
+<<<<<<< HEAD
               "codigoProduto": {
                 "type": "string",
                 "example": "000001"
@@ -669,20 +759,91 @@
               "observacao": {
                 "type": "string",
                 "example": "Sem cebola"
+=======
+              "cpf": {
+                "type": "string",
+                "example": "12345678910"
+              },
+              "data": {
+                "type": "string",
+                "example": "13/01/2023"
+              },
+              "horaEntrada": {
+                "type": "string",
+                "example": "18:05"
+              },
+              "horaSaida": {
+                "type": "string",
+                "example": "18:15"
+              },
+              "valorPedido": {
+                "type": "string",
+                "example": "46,00"
+              },
+              "status": {
+                "type": "string",
+                "example": "Finalizado"
+              },
+              "itensPedidos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "codigoProduto": {
+                      "type": "string",
+                      "example": "000003"
+                    },
+                    "descricaoProduto": {
+                      "type": "string",
+                      "example": "Coca-cola"
+                    },
+                    "qtde": {
+                      "type": "string",
+                      "example": "2"
+                    },
+                    "valor": {
+                      "type": "string",
+                      "example": "8,00"
+                    },
+                    "observacao": {
+                      "type": "string",
+                      "example": ""
+                    }
+                  },
+                  "required": [
+                    "codigoProduto",
+                    "descricaoProduto",
+                    "qtde",
+                    "valor",
+                    "observacao"
+                  ]
+                }
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
               }
             },
             "required": [
               "codigoPedido",
+<<<<<<< HEAD
               "codigoProduto",
               "descricaoProduto",
               "qtde",
               "valor",
               "observacao"
+=======
+              "cpf",
+              "data",
+              "horaEntrada",
+              "horaSaida",
+              "valorPedido",
+              "status",
+              "itensPedidos"
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
             ]
           }
         }
       },
       "required": [
+<<<<<<< HEAD
         "cpf",
         "data",
         "horaEntrada",
@@ -690,6 +851,9 @@
         "valorPedido",
         "status",
         "itensPedidos"
+=======
+        "pedidos"
+>>>>>>> c6365a0a0a9b284d49aa0cc3a4ad18e5eb79d659
       ]
     }
   }

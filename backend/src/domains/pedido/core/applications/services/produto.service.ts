@@ -11,10 +11,14 @@ export class ProdutoService {
 
     async adiciona(produto: Produto): Promise<ProdutoVersao> {
 
-        const ultimaVersao = await this.database.buscaUltimaVersao(produto.getCodigo())
+        try {
+            const ultimaVersao = await this.database.buscaUltimaVersao(produto.getCodigo())
 
-        if (ultimaVersao) {
-            throw new CustomError('Já existe procuto para esse Codigo', 400, false, [])
+            if (ultimaVersao) {
+                throw new CustomError('Já existe procuto para esse Codigo', 400, false, [])
+            }
+        } catch (err) {
+            console.log("Nenhum produto encontrado")
         }
 
         return await this.database.adiciona(produto).then()

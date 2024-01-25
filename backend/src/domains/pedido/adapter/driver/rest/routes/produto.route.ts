@@ -8,7 +8,7 @@ const produtoRoutes = Router();
 
 produtoRoutes.get('/', (_request: Request, response: Response, _next: NextFunction) => {
   // #swagger.ignore = true
-  return response.json("Lanchonetes OK")
+  return response.json("Produtos OK")
 });
 
 produtoRoutes.post('/produto',
