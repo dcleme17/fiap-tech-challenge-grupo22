@@ -68,7 +68,7 @@ Estrutura de diretórios do projeto
 
 ## Subindo os containers do Docker
 
-Execute os comandos abaixo (o primeiro destroi todos os containers e volumes do docker, incluindo o banco de dados, então cuidado.)
+Execute os comandos abaixo (o primeiro destrói todos os containers e volumes do docker, incluindo o banco de dados, então cuidado.)
 
 ```bash
   docker-compose down -v --rmi local
@@ -79,18 +79,18 @@ Após completar a incialização dos containers, os serviços podem ser acessado
 
 Backend (API)
 ```bash
-http://localhost:3002/api/<dominio>/<operações>
+http://localhost:3000/api/<dominio>/<operações>
 ```
 Documentação (Swagger) será exposta na URL abaixo
 ```bash
-http://localhost:3002/api-docs
+http://localhost:3000/api-docs
 ```
 
 MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb.com/docs/mongodb-shell/)
 ```bash
-localhost:3000
+localhost:27017
 ```
 Mongo Express (Interface para manutenção do MongoDB)
 ```bash
-localhost:8081 
+http://localhost:8081 
 ```
