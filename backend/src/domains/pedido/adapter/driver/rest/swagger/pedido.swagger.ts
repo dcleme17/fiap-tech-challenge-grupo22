@@ -31,20 +31,11 @@ export const get_pedido = {
 }
 
 export const post_pedido = {
-    $codigoPedido: "000001",
     $cpf: "12345678910",
-    $data: "13/01/2023",
-    $horaEntrada: "18:05",
-    $horaSaida: "18:15",
-    $valorPedido: "20,00",
-    $status: "Finalizado",
-    $itensPedidos: [
+    $itens: [
         {
-            $codigoPedido: "000001",
             $codigoProduto: "000001",
-            $descricaoProduto: "Hamburguer",
-            $qtde: "1",
-            $valor: "20,00",
+            $quantidade: 1 ,
             $observacao: "Sem cebola"
         }
     ]
@@ -52,18 +43,10 @@ export const post_pedido = {
 
 export const put_pedido = {
     $cpf: "12345678910",
-    $data: "13/01/2023",
-    $horaEntrada: "18:05",
-    $horaSaida: "18:15",
-    $valorPedido: "46,00",
-    $status: "Finalizado",
-    $itensPedidos: [
+    $itens: [
         {
-            $codigoPedido: "000001",
             $codigoProduto: "000001",
-            $descricaoProduto: "Hamburguer",
-            $qtde: "1",
-            $valor: "20,00",
+            $quantidade: 1 ,
             $observacao: "Sem cebola"
         }
     ]

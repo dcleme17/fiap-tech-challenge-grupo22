@@ -1,22 +1,22 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { PagamentoController } from "domains/pagamento/adapter/driver/rest/controllers/pagamento.controller"
-import { body, param } from 'express-validator'
+import { body } from 'express-validator'
 import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
 import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
 
 const router = Router();
 
-router.get('/', (_request: Request, response: Response, _next: NextFunction) => {
-  // #swagger.ignore = true
-  return response.json("Pagamentos OK")
-});
-
-router.post('/',
-  body('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
-  body('produto').trim().isLength({ min: 4, max: 60 }).notEmpty(),
-  body('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
-  body('preco').trim().notEmpty(),
-  body('descricao').trim().isLength({ min: 4, max: 80 }),
+router.post('/',  
+  body('codigoPedido').trim().isLength({ min: 1, max: 16 }).notEmpty(),
+  body('meio').trim().isLength({ min: 1, max: 6 }).notEmpty(),
+  body("nome").notEmpty(),
+  body("cpf").notEmpty(),
+  body("email").notEmpty(),
+  body("valor").notEmpty(),
+  body("parcelamento").notEmpty(),
+  body("meio").notEmpty(),
+  body("data").notEmpty(),
+  body("versao").notEmpty(),
   (request: Request, _response: Response, next: NextFunction) => {
 
     /**
@@ -29,7 +29,7 @@ router.post('/',
         #swagger.tags = ['Pagamento']
         #swagger.parameters['body'] = { 
                 in: 'body', 
-                'schema': { $ref: '#/definitions/post_produto' }
+                'schema': { $ref: '#/definitions/post_pagamentos' }
         }
     */
 
@@ -37,7 +37,8 @@ router.post('/',
     const service = new PagamentoService(database)
     const controller = new PagamentoController(service)
 
-    controller.adiciona(request, next).then()
+    controller.pagar(request, next).then()
   });
+
 
   export default router;

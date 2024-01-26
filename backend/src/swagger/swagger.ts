@@ -17,8 +17,6 @@ import {
 
 } from 'domains/pedido/adapter/driver/rest/swagger/pedido.swagger'
 
-console.info(process.env.PORT)
-
 export const swagger = {
     swagger: "2.0",
     info: {

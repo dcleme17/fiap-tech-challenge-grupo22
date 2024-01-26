@@ -18,7 +18,7 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
             codigo: produto.getCodigo(),
             produto: produto.getProduto(),
             categoria: produto.getCategoria(),
-            preco: produto.getPreco(),
+            preco: Number(produto.getPreco()),
             descricao: produto.getDescricao()
         });
 

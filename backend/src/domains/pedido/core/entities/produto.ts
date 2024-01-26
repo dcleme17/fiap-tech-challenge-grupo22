@@ -2,7 +2,7 @@ import { ProdutoVersao } from "./produto.versao"
 
 export class Produto {
 
-    constructor(codigo: string, produto: string, categoria: string, preco: string, descricao: string, versao: ProdutoVersao | null = null) {
+    constructor(codigo: string, produto: string, categoria: string, preco: number, descricao: string, versao: ProdutoVersao | null = null) {
         this.produto = produto
         this.categoria = categoria
         this.codigo = codigo  
@@ -31,8 +31,8 @@ export class Produto {
         return this.codigo
     }
 
-    private preco: string
-    public getPreco(): string {
+    private preco: number
+    public getPreco(): number {
         return this.preco
     }
 

@@ -6,6 +6,7 @@ import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao";
 export class ClienteDatabase extends MongoDB implements ICliente {
     
     constructor() {
+        console.info(process.env.DATABASE_URL)
         super(process.env.DATABASE_URL!);
     }
     

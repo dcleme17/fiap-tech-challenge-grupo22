@@ -1,11 +1,16 @@
+import { Double } from "mongodb"
 import { PagamentoVersao } from "./pagamento.versao"
 
 export class Pagamento {
 
-    constructor(cpf: string, nome: string, email: string, versao: PagamentoVersao | null = null) {
+    constructor(cpf: string, nome: string, email: string, valor: Double, parcelamento: number, meio: string, data: Date, versao: PagamentoVersao | null = null) {
         this.nome = nome
         this.cpf = cpf  
         this.email = email
+        this.valor = valor
+        this.parcelamento = parcelamento
+        this.meio = meio
+        this.data = data
         this.versao = versao
     }
 
@@ -27,6 +32,26 @@ export class Pagamento {
     private email: string
     public getEmail(): string {
         return this.email
+    }
+
+    private valor: Double
+    public getValor(): Double {
+        return this.valor
+    } 
+
+    private parcelamento: number
+    public getParcelamento(): number {
+        return this.parcelamento
+    }
+
+    private meio: string
+    public getMeio(): string {
+        return this.meio
+    }
+
+    private data: Date
+    public getData(): Date {
+        return this.data
     }
 
     /**

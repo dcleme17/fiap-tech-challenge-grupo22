@@ -1,31 +1,38 @@
+import { Cliente } from "domains/cliente/core/entities/cliente"
 import { PedidoVersao } from "./pedido.versao"
+import { ItemPedido } from "./itempedido"
+
+export enum StatusPedido {
+    Recebido = 'Recebido',
+    Preparacao = 'Em Preparação',
+    Pagamento = 'Aguardando Pagamento',
+    Pronto = 'Pronto',
+    Finalizado = 'Finalizado',
+    Cancelado = 'Cancelado'
+  }
 
 export class Pedido {
 
-    constructor(codigoPedido: string, cpf: string, data: string, horaEntrada: string, horaSaida: string, valorPedido: string, status: string, versao: PedidoVersao | null = null) {
-        this.codigoPedido = codigoPedido
-        this.cpf = cpf
+    constructor(
+        data: string, 
+        horaEntrada: string, 
+        status: StatusPedido | null,
+        itens: Array<ItemPedido>, 
+        valorPedido: number, 
+        cliente: Cliente | null = null, 
+        horaSaida: string | null = null, 
+        codigoPedido: string | null = null, 
+        versao: PedidoVersao | null = null,
+    ){
         this.data = data  
         this.horaEntrada = horaEntrada
-        this.horaSaida = horaSaida
-        this.valorPedido = valorPedido
         this.status = status
+        this.itens = itens
+        this.valorPedido = valorPedido
+        this.cliente = cliente
+        this.horaSaida = horaSaida
+        this.codigoPedido = codigoPedido
         this.versao = versao
-    }
-
-    private versao: PedidoVersao | null
-    public getVersao(): PedidoVersao | null {
-        return this.versao
-    }
-
-    private codigoPedido: string
-    public getCodigoPedido(): string {
-        return this.codigoPedido
-    }
-
-    private cpf: string
-    public getCpf(): string {
-        return this.cpf
     }
 
     private data: string
@@ -34,24 +41,49 @@ export class Pedido {
     }
 
     private horaEntrada: string
-    public gethoraEntrada(): string {
+    public getHoraEntrada(): string {
         return this.horaEntrada
     }
 
-    private horaSaida: string
-    public gethoraSaida(): string {
-        return this.horaSaida
+    private status: StatusPedido | null
+    public getStatus(): StatusPedido | null {
+        return this.status
     }
 
-    private valorPedido: string
-    public getValorPedido(): string {
+    public setStatus(status: StatusPedido | null): void {
+        this.status = status
+    }
+
+    private itens: Array<ItemPedido>
+    public getItens(): Array<ItemPedido> {
+        return this.itens
+    }
+
+    private valorPedido: number
+    public getValorPedido(): number {
         return this.valorPedido
     }
 
-    private status: string
-    public getStatus(): string {
-        return this.status
+    private cliente: Cliente | null
+    public getCliente(): Cliente | null {
+        return this.cliente
     }
+
+    private horaSaida: string | null
+    public getHoraSaida(): string | null{
+        return this.horaSaida
+    }
+
+    private codigoPedido: string | null
+    public getCodigoPedido(): string | null{
+        return this.codigoPedido
+    }
+
+    private versao: PedidoVersao | null
+    public getVersao(): PedidoVersao | null {
+        return this.versao
+    }
+
     /**
      * 
      * @param comparable 

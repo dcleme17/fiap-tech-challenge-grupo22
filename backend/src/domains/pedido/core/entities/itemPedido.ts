@@ -1,25 +1,17 @@
-import { ItemPedidoVersao } from "./itemPedido.versao"
-
 export class ItemPedido {
 
-    constructor(codigoPedido: string, codigoProduto: string, descricaoProduto: string,  qtde: string, valor: string, observacao: string, versao: ItemPedidoVersao | null = null) {
-        this.codigoPedido = codigoPedido
+    constructor(
+        codigoProduto: string, 
+        quantidade: number, 
+        observacao: string, 
+        descricaoProduto: string | null = null,  
+        valor: number | null = null
+    ){
         this.codigoProduto = codigoProduto
-        this.descricaoProduto = descricaoProduto
-        this.qtde = qtde  
-        this.valor = valor
+        this.quantidade = quantidade  
         this.observacao = observacao
-        this.versao = versao
-    }
-
-    private versao: ItemPedidoVersao | null
-    public getVersao(): ItemPedidoVersao | null {
-        return this.versao
-    }
-
-    private codigoPedido: string
-    public getCodigoPedido(): string {
-        return this.codigoPedido
+        this.descricaoProduto = descricaoProduto
+        this.valor = valor
     }
 
     private codigoProduto: string
@@ -27,18 +19,18 @@ export class ItemPedido {
         return this.codigoProduto
     }
 
-    private descricaoProduto: string
-    public getDescricaoProduto(): string {
+    private descricaoProduto: string | null
+    public getDescricaoProduto(): string | null {
         return this.descricaoProduto
     }
 
-    private qtde: string
-    public getQtde(): string {
-        return this.qtde
+    private quantidade: number
+    public getQuantidade(): number {
+        return this.quantidade
     }
 
-    private valor: string
-    public getValor(): string {
+    private valor: number | null
+    public getValor(): number | null {
         return this.valor
     }
 

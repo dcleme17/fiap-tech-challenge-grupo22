@@ -39,7 +39,7 @@ router.put('/v1/:codigo',
   param('codigo').trim().isLength({ min: 1, max: 6 }).notEmpty(),
   body('produto').trim().isLength({ min: 4, max: 60 }).notEmpty(),
   body('categoria').trim().isLength({ min: 4, max: 60 }).notEmpty(),
-  body('preco').trim().notEmpty(),
+  body('preco').isNumeric().notEmpty(),
   body('descricao').trim().isLength({ min: 4, max: 80 }),
   (request: Request, _response: Response, next: NextFunction) => {
 

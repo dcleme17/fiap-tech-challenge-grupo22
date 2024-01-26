@@ -3,18 +3,16 @@ import { PedidoController } from "domains/pedido/adapter/driver/rest/controllers
 import { body, param } from 'express-validator'
 import { PedidoService } from 'domains/pedido/core/applications/services/pedido.service';
 import { PedidoDatabase } from 'domains/pedido/adapter/driven/infra/database/pedido.database';
+import { ClienteService } from 'domains/cliente/core/applications/services/cliente.service';
+import { ClienteDatabase } from 'domains/cliente/adapter/driven/infra/database/cliente.database';
+import { ProdutoDatabase } from 'domains/pedido/adapter/driven/infra/database/produto.database';
+import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
 
 const router = Router();
 
 router.post('/v1',
-  body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
-  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
-  body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
-  body('horaEntrada').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('horaSaida').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('valorPedido').trim().notEmpty(),
-  body('status').trim().isLength({ min: 5, max: 20 }),
-  body('itensPedidos').notEmpty(),
+  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty().optional(),
+  body('itens').notEmpty().isArray(),
   (request: Request, _response: Response, next: NextFunction) => {
   
     /**
@@ -31,27 +29,19 @@ router.post('/v1',
         }
     */
 
-    const database = new PedidoDatabase();
-    const service = new PedidoService(database)
-    const controller = new PedidoController(service)
-
-    //const databaseItem = new ItemPedidoDatabase();
-    //const serviceItem = new ItemPedidoService(databaseItem)
-    //const controllerItem = new ItemPedidoController(serviceItem)
+    const service = new PedidoService(
+      new PedidoDatabase(), 
+      new ClienteService(new ClienteDatabase()), 
+      new ProdutoService(new ProdutoDatabase())
+    )
+    const controller = new PedidoController(service)        
 
     controller.adiciona(request, next).then()
-    //controllerItem.adiciona(request, next).then()
   });
 
-  router.put('/v1/:codigoPedido',
-  param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
-  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
-  body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
-  body('horaEntrada').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('horaSaida').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('valorPedido').trim().notEmpty(),
-  body('status').trim().isLength({ min: 5, max: 20 }),
-  body('itensPedidos').notEmpty(),
+router.put('/v1/:codigoPedido',
+body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty().optional(),
+body('itens').notEmpty().isArray(),
   (request: Request, _response: Response, next: NextFunction) => {
     
     /**
@@ -66,23 +56,19 @@ router.post('/v1',
                 in: 'body', 
                 'schema': { $ref: '#/definitions/put_pedido' }
         }
-    */    
+    */   
 
-    const database = new PedidoDatabase();
-    const service = new PedidoService(database)
-    const controller = new PedidoController(service)
+    const service = new PedidoService(
+      new PedidoDatabase(), 
+      new ClienteService(new ClienteDatabase()), 
+      new ProdutoService(new ProdutoDatabase())
+    )
+    const controller = new PedidoController(service)           
 
     controller.atualiza(request, next).then()
   });
 
-  router.get('/v1',
-  body('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
-  body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty(),
-  body('data').trim().isLength({ min: 6, max: 10 }).notEmpty(),
-  body('horaEntrada').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('horaSaida').trim().isLength({ min: 1, max: 10 }).notEmpty(),
-  body('valorPedido').trim().notEmpty(),
-  body('status').trim().isLength({ min: 5, max: 20 }),
+router.get('/v1',
  (request: Request, _response: Response, next: NextFunction) => {
 
   /**
@@ -93,17 +79,41 @@ router.post('/v1',
       #swagger.operationId = 'getPedido'
       #swagger.deprecated = false
       #swagger.tags = ['Pedido']
-      #swagger.parameters['body'] = { 
-                in: 'body', 
-                'schema': { $ref: '#/definitions/get_pedido' }
-      }
   */        
 
-  const database = new PedidoDatabase();
-  const service = new PedidoService(database)
-  const controller = new PedidoController(service)
+  const service = new PedidoService(
+    new PedidoDatabase(), 
+    new ClienteService(new ClienteDatabase()), 
+    new ProdutoService(new ProdutoDatabase())
+  )
+  const controller = new PedidoController(service)   
 
-  controller.buscaUltimaVersao(request, next).then()
-});
+  controller.listaPedidos(request, next).then()
+});  
+
+router.put('/v1/:codigoPedido/checkout/pix',
+  param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  (request: Request, _response: Response, next: NextFunction) => {
+    
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Faz o checkout de um pedido'
+        #swagger.description = 'Faz o checkout de um pedido com a forma de pagamento PIX'
+        #swagger.operationId = 'putpedido'
+        #swagger.deprecated = false
+        #swagger.tags = ['Pedido']
+    */ 
+
+    const service = new PedidoService(
+      new PedidoDatabase(), 
+      new ClienteService(new ClienteDatabase()), 
+      new ProdutoService(new ProdutoDatabase())
+    )
+    const controller = new PedidoController(service)   
+
+    controller.checkoutPIX(request, next).then()
+});  
+
 
 export default router;
