@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
 import { PedidoService } from 'domains/pedido/core/applications/services/pedido.service';
-import { ItemPedido } from 'domains/pedido/core/entities/itempedido';
+import { ItemPedido } from 'domains/pedido/core/entities/itemPedido';
 
 export class PedidoController {
 
