@@ -1,5 +1,5 @@
 import { Pedido, StatusPedido } from "domains/pedido/core/entities/pedido";
-import { ItemPedido } from "domains/pedido/core/entities/itempedido";
+import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { PedidoDatabase } from "domains/pedido/adapter/driven/infra/database/pedido.database"
 import { CustomError } from "domains/suporte/entities/custom.error"

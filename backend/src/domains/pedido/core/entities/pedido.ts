@@ -1,6 +1,6 @@
 import { Cliente } from "domains/cliente/core/entities/cliente"
 import { PedidoVersao } from "./pedido.versao"
-import { ItemPedido } from "./itempedido"
+import { ItemPedido } from "./itemPedido"
 
 export enum StatusPedido {
     Recebido = 'Recebido',
