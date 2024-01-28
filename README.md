@@ -44,27 +44,115 @@ Inicie o servidor
   pnpm dev
 ```
 
-Estrutura de diretórios do projeto
+Visão geral da estrutura do projeto
 
-    > src
-      > domains --> Todos os domínios mapeados
-        > acesso --> domínio
-            > adapters --> adaptadores de condutores e conduzidos do projeto 
-              > driven --> Adaptadores conduzidos como infra de banco de dados
-              > driver --> Adaptadores condutores como a API Rest
-                controllers --> controladores (adaptadores) das operações REST
-                routes --> Rotas expostas das API's REST
-            > core --> recursos que implementam a lógica do domínio
-              > applications --> interfaces e serviços do domínio
-                > ports --> interfaces expostas para os adaptadores
-                > servies --> Lógica de negócio do domínio
-              > entities --> Entidades do domínio
-      > environments --> arquivos de configuração de ambiente do projeto
-      environment.config.ts --> Classe que controla a configuração do ambiente
-      express.config.ts --> Comfigurações do express, inclusindo middlewares utilizados no framework
-      routes.config.ts --> Configuração das rotas globais
-      server.ts --> Ponto de entrada para execução dos servidor express
+![Hexagonal](hexagonal.jpg)
 
+Estrutura dos arquivos e diretórios do projeto
+```shell
+src
+   ├── application.ts
+   ├── 📁 configuration
+   │   ├── environment.config.ts
+   │   ├── 📁 environments
+   │   │   ├── development.env
+   │   │   └── production.env
+   │   ├── express.config.ts
+   │   ├── routes.config.ts
+   │   └── server.config.ts
+   ├── 📁 domains
+   │   ├── 📁 cliente
+   │   │   ├── 📁 adapter
+   │   │   │   ├── 📁 driven
+   │   │   │   │   └── 📁 infra
+   │   │   │   │       └── 📁 database
+   │   │   │   │           └── cliente.database.ts
+   │   │   │   └── 📁 driver
+   │   │   │       └── 📁 rest
+   │   │   │           ├── 📁 controllers
+   │   │   │           │   └── cliente.controller.ts
+   │   │   │           ├── 📁 routes
+   │   │   │           │   └── cliente.route.ts
+   │   │   │           └── 📁 swagger
+   │   │   │               └── acesso.swagger.ts
+   │   │   └── 📁 core
+   │   │       ├── 📁 applications
+   │   │       │   ├── 📁 ports
+   │   │       │   │   └── cliente.port.ts
+   │   │       │   └── 📁 services
+   │   │       │       └── cliente.service.ts
+   │   │       └── 📁 entities
+   │   │           ├── cliente.ts
+   │   │           └── cliente.versao.ts
+   │   ├── 📁 pagamento
+   │   │   ├── 📁 adapter
+   │   │   │   ├── 📁 driven
+   │   │   │   │   └── 📁 infra
+   │   │   │   │       ├── 📁 database
+   │   │   │   │       │   └── pagamento.database.ts
+   │   │   │   │       └── 📁 pix
+   │   │   │   └── 📁 driver
+   │   │   │       └── 📁 rest
+   │   │   │           ├── 📁 controllers
+   │   │   │           │   └── pagamento.controller.ts
+   │   │   │           ├── 📁 routes
+   │   │   │           │   └── pagamento.route.ts
+   │   │   │           └── 📁 swagger
+   │   │   │               └── pagamento.swagger.ts
+   │   │   └── 📁 core
+   │   │       ├── 📁 applications
+   │   │       │   ├── 📁 ports
+   │   │       │   │   └── pagamento.port.ts
+   │   │       │   └── 📁 services
+   │   │       │       └── pagamento.service.ts
+   │   │       └── 📁 entities
+   │   │           ├── pagamento.ts
+   │   │           └── pagamento.versao.ts
+   │   ├── 📁 pedido
+   │   │   ├── 📁 adapter
+   │   │   │   ├── 📁 driven
+   │   │   │   │   └── 📁 infra
+   │   │   │   │       └── 📁 database
+   │   │   │   │           ├── pedido.database.ts
+   │   │   │   │           └── produto.database.ts
+   │   │   │   └── 📁 driver
+   │   │   │       └── 📁 rest
+   │   │   │           ├── 📁 controllers
+   │   │   │           │   ├── pedido.controller.ts
+   │   │   │           │   └── produto.controller.ts
+   │   │   │           ├── 📁 routes
+   │   │   │           │   ├── pedido.route.ts
+   │   │   │           │   └── produto.route.ts
+   │   │   │           └── 📁 swagger
+   │   │   │               ├── pedido.swagger.ts
+   │   │   │               └── produto.swagger.ts
+   │   │   └── 📁 core
+   │   │       ├── 📁 applications
+   │   │       │   ├── 📁 ports
+   │   │       │   │   ├── pedido.port.ts
+   │   │       │   │   └── produto.port.ts
+   │   │       │   └── 📁 services
+   │   │       │       ├── pedido.service.ts
+   │   │       │       └── produto.service.ts
+   │   │       └── 📁 entities
+   │   │           ├── itempedido.ts
+   │   │           ├── pedido.ts
+   │   │           ├── pedido.versao.ts
+   │   │           ├── produto.ts
+   │   │           └── produto.versao.ts
+   │   └── 📁 suporte
+   │       ├── 📁 entities
+   │       │   ├── custom.error.ts
+   │       │   └── custom.response.ts
+   │       └── 📁 infra
+   │           ├── 📁 database
+   │           │   └── mongodb.ts
+   │           └── error.handler.ts
+   ├── 📁 swagger
+   │   ├── swagger.json
+   │   └── swagger.ts
+   └── swagger.ts
+```
 
 ## Subindo os containers do Docker
 
