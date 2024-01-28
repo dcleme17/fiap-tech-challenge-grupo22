@@ -33,6 +33,9 @@ export const swagger = {
             name: 'Pedido',             
             description: 'APIs do domínio de Pedidos'       
         },  {
+            name: 'Produto',             
+            description: 'APIs para gerenciamento de produtos'       
+        }, {
             name: 'Pagamento',             
             description: 'APIs do domínio de Pagamento'       
         }

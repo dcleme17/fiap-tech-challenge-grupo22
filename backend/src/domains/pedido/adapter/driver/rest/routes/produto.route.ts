@@ -21,7 +21,7 @@ router.post('/v1',
         #swagger.description = 'Cria um novo produto a partir das informações básicas'
         #swagger.operationId = 'postproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Pedido']
+        #swagger.tags = ['Produto']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/post_produto' }
@@ -46,11 +46,11 @@ router.put('/v1/:codigo',
     /**
         @Swagger
         #swagger.auto = true
-        #swagger.summary = 'Atualiza um novo produto'
+        #swagger.summary = 'Atualiza um produto'
         #swagger.description = 'Atualiza os dados de um produto pelo codigo'
         #swagger.operationId = 'postproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Pedido']
+        #swagger.tags = ['Produto']
         #swagger.parameters['body'] = { 
                 in: 'body', 
                 'schema': { $ref: '#/definitions/put_produto' }
@@ -75,7 +75,7 @@ router.delete('/v1/:codigo',
         #swagger.description = 'Deleta os dados de um produto pelo codigo'
         #swagger.operationId = 'deleteproduto'
         #swagger.deprecated = false
-        #swagger.tags = ['Pedido']
+        #swagger.tags = ['Produto']
     */    
 
     const database = new ProdutoDatabase();
@@ -96,7 +96,7 @@ router.get('/v1',
       #swagger.description = 'busca produtos por categoria'
       #swagger.operationId = 'getProduto'
       #swagger.deprecated = false
-      #swagger.tags = ['Pedido']
+      #swagger.tags = ['Produto']
       #swagger.parameters['categoria'] = { 
         in: 'query',
         description: 'Categoria que o produto pertence',
