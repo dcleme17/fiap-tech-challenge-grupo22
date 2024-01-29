@@ -108,31 +108,36 @@ export class ProdutoDatabase extends MongoDB implements IProduto {
 
         const produtoRef = await this.getCollection('lanchonete', 'produtos').then()
 
-        const cursor = produtoRef.find(
-            {
-                categoria: categoria
+        const codigosUnicos = await produtoRef.distinct('codigo', { 'categoria': categoria });
+
+        let listaProdutos = new Array<Produto>
+
+        for await (const i of codigosUnicos) {
+            let prod = this.buscaUltimaVersao(i).then()
+            let ver = (await prod).getVersao()
+            let version
+            if (ver?.versao !== undefined) {
+                version = ver?.versao
+            } else {
+                version = ""
             }
-        )
-
-        let listaProdutos = []
-
-        for await (const doc of cursor) {
-
-            if (!doc) {
-                return []
+            let data
+            if (ver?.dataCadastro !== undefined) {
+                data = ver?.dataCadastro
+            } else {
+                data = new Date()
             }
-            listaProdutos.push(
-                new Produto(
-                    doc?.codigo,
-                    doc?.produto,
-                    doc?.categoria,
-                    doc?.preco,
-                    doc?.descricao,
-                    new ProdutoVersao(
-                        doc?._id.toString(),
-                        doc?._id.getTimestamp()
-                    ))
-            )
+            listaProdutos.push(new Produto(
+                (await prod).getCodigo(),
+                (await prod).getProduto(),
+                (await prod).getCategoria(),
+                (await prod).getPreco(),
+                (await prod).getDescricao(),
+                new ProdutoVersao(
+                    version,
+                    data
+                )
+            ))
         }
         return listaProdutos
     }

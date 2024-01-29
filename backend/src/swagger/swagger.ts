@@ -11,7 +11,6 @@ import {
 } from 'domains/pedido/adapter/driver/rest/swagger/produto.swagger'
 
 import {
-    get_pedido,
     post_pedido,
     put_pedido
 
@@ -46,7 +45,6 @@ export const swagger = {
         put_cliente,
         post_produto,
         put_produto,
-        get_pedido,
         post_pedido,
         put_pedido
     }
