@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels: 
+    app: database
+spec:
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        volumeMounts:
+          - name: database
+            mountPath: /data/db        
+        ports:
+        - containerPort: 27017       
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: mongo
+                key: MONGO_INITDB_ROOT_USERNAME
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo
+                key: MONGO_INITDB_ROOT_PASSWORD        
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"           
+      volumes:
+      - name: database
+        persistentVolumeClaim:
+          claimName: mongodb 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database

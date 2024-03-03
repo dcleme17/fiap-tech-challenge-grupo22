@@ -8,6 +8,7 @@
     "start": "tsx src/configuration/server.config.ts",
     "swagger": "tsx watch src/swagger.ts",
     "build": "tsc ",
+    "build:docker": "docker build . --tag dcleme17/fiap-tc-backend",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix"
   },
