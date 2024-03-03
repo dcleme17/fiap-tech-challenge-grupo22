@@ -1,6 +1,14 @@
 import { Cliente } from "domains/cliente/core/entities/cliente"
 import { PedidoVersao } from "./pedido.versao"
 import { ItemPedido } from "./itemPedido"
+import { Pagamento } from "domains/pagamento/core/entities/pagamento"
+
+export enum EventosPedido {
+    CRIADO = "CRIADO",
+    PAGO = "PAGO",
+    PREPARADO = "PREPARADO",
+    EXPIRADO = "EXPIRADO"
+}
 
 export enum StatusPedido {
     Recebido = 'Recebido',
@@ -19,20 +27,17 @@ export class Pedido {
         status: StatusPedido | null,
         itens: Array<ItemPedido>, 
         valorPedido: number, 
-        cliente: Cliente | null = null, 
-        horaSaida: string | null = null, 
-        codigoPedido: string | null = null, 
-        versao: PedidoVersao | null = null,
     ){
         this.data = data  
         this.horaEntrada = horaEntrada
         this.status = status
         this.itens = itens
         this.valorPedido = valorPedido
-        this.cliente = cliente
-        this.horaSaida = horaSaida
-        this.codigoPedido = codigoPedido
-        this.versao = versao
+        this.cliente = null
+        this.horaSaida = null
+        this.codigoPedido = null
+        this.pagamento = null
+        this.versao = null
     }
 
     private data: string
@@ -68,20 +73,40 @@ export class Pedido {
     public getCliente(): Cliente | null {
         return this.cliente
     }
+    public setCliente(cliente: Cliente) {
+        this.cliente = cliente
+    }
 
     private horaSaida: string | null
     public getHoraSaida(): string | null{
         return this.horaSaida
+    }    
+    public setHoraSaida(horaSaida: string) {
+        this.horaSaida = horaSaida
     }
 
     private codigoPedido: string | null
     public getCodigoPedido(): string | null{
         return this.codigoPedido
     }
+    public setCodigoPedido(codigoPedido: string) {
+        this.codigoPedido = codigoPedido
+    }
+
+    private pagamento: Pagamento | null
+    public getPagamento(): Pagamento | null{
+        return this.pagamento
+    }
+    public setPagamento(pagamento: Pagamento) {
+        this.pagamento = pagamento
+    }
 
     private versao: PedidoVersao | null
     public getVersao(): PedidoVersao | null {
         return this.versao
+    }    
+    public setVersao(versao: PedidoVersao) {
+        this.versao = versao
     }
 
     /**

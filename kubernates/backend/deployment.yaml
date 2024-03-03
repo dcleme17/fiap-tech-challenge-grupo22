@@ -40,11 +40,36 @@ spec:
               configMapKeyRef:
                 name: backend
                 key: PORT
+          - name: MERCADOPAGO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: backend
+                key: MERCADOPAGO_URL
+          - name: MERCADOPAGO_WEBHOOK_URL
+            valueFrom:
+              configMapKeyRef:
+                name: backend
+                key: MERCADOPAGO_WEBHOOK_URL
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
                 name: backend
                 key: DATABASE_URL  
+          - name: MERCADOPAGO_USERID
+            valueFrom:
+              secretKeyRef:
+                name: backend
+                key: MERCADOPAGO_USERID  
+          - name: MERCADOPAGO_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: backend
+                key: MERCADOPAGO_TOKEN  
+          - name: MERCADOPAGO_POS
+            valueFrom:
+              secretKeyRef:
+                name: backend
+                key: MERCADOPAGO_POS  
   replicas: 2
   selector:
     matchLabels:

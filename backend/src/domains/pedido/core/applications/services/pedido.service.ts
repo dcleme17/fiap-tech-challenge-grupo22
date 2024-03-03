@@ -1,4 +1,4 @@
-import { Pedido, StatusPedido } from "domains/pedido/core/entities/pedido";
+import { EventosPedido, Pedido, StatusPedido } from "domains/pedido/core/entities/pedido";
 import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { PedidoDatabase } from "domains/pedido/adapter/driven/infra/database/pedido.database"
@@ -7,16 +7,20 @@ import { ClienteService } from "domains/cliente/core/applications/services/clien
 import { Cliente } from "domains/cliente/core/entities/cliente";
 import { format } from "date-fns";
 import { ProdutoService } from "./produto.service";
+import { PagamentoService } from "domains/pagamento/core/applications/services/pagamento.service";
+import { MeioPagamento, Pagamento, StatusPagamento } from "domains/pagamento/core/entities/pagamento";
 
 export class PedidoService {
 
     constructor(
         private readonly database: PedidoDatabase,
         private readonly clienteService: ClienteService,
-        private readonly produtoService: ProdutoService
+        private readonly produtoService: ProdutoService,
+        private readonly pagamentoService: PagamentoService
     ) {
         this.database = database
         this.clienteService = clienteService
+        this.pagamentoService = pagamentoService
     }
 
     async adiciona(cpf: string | null, itens: Array<ItemPedido>, codigoPedido: string | null = null): Promise<PedidoVersao> {
@@ -26,7 +30,7 @@ export class PedidoService {
         let valorPedido: number = 0.0
 
         if (cpf) {
-            cliente = await  this.clienteService.buscaUltimaVersao(cpf).then()
+            cliente = await this.clienteService.buscaUltimaVersao(cpf).then()
         } else {
             cliente = null;
         }
@@ -38,7 +42,6 @@ export class PedidoService {
             const item = itens[i];
 
             const produto = await this.produtoService.buscaUltimaVersao(item.getCodigoProduto()).then()
-            console.info('produto', produto)
 
             const detalhado = new ItemPedido(
                 produto.getCodigo(),
@@ -59,14 +62,13 @@ export class PedidoService {
             format(new Date(), 'hh:mm:ss'), 
             StatusPedido.Recebido,   
             itensPedido,      
-            valorPedido,
-            cliente,
-            null,
-            codigoPedido,
-            null
+            valorPedido
         )
+ 
+        pedido.setCliente(cliente!)
+        pedido.setCodigoPedido(codigoPedido!)
 
-        var pedidoVersao = await this.database.adiciona(pedido).then()
+        var pedidoVersao: PedidoVersao = await this.database.adiciona(pedido).then()
 
         return pedidoVersao
     }
@@ -110,14 +112,11 @@ export class PedidoService {
 
     async checkout (codigoPedido: string): Promise<any> {
 
-        const ultimaVersao: Pedido = await this.database.buscaUltimaVersao(codigoPedido).then()
+        const pedido = await this.database.buscaUltimaVersao(codigoPedido).then()
 
-        if (!ultimaVersao) {
+        if (!pedido) {
             throw new CustomError('Pedido não encontrado', 400, false, [])
         } 
-
-        /** facility */
-        const pedido: Pedido = ultimaVersao as Pedido;
 
         if (pedido.getValorPedido() <= 1) {
             throw new CustomError('Valor do pedido menor do que o permitido', 400, false, [])
@@ -131,10 +130,64 @@ export class PedidoService {
             //TODO: validar a data do pedido
         }
 
+        /** Solicitar Pagamento */
+
+        pedido.setStatus(StatusPedido.Pagamento)
+
+        console.info(pedido)
+
+        await this.pagamentoService.criar(new Pagamento(
+            pedido.getCliente()?.getCpf()!,
+            pedido.getCliente()?.getNome()!,
+            pedido.getCliente()?.getEmail()!,
+            pedido.getValorPedido(),
+            1,
+            MeioPagamento.PIX,
+            pedido.getCodigoPedido()!
+        )).then()
+
+        /** 
+         * Normalmente eu faria os dados serem retornados na criação, 
+         * porém para manter o padrão criado na fase antetior estou fazendo uma nova consulta.
+         * Definitivamente não gosto desse formato por fazer uma query 
+         * para trazer dados que já estão em memória.
+         * */
+
+        console.info(pedido)
+
+        const pagamento = await this.pagamentoService.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
+
+        pedido.setPagamento(pagamento)
+
+        const pedidoVersao: Pedido = await this.database.adiciona(pedido).then()
+        
+        return {
+            pedido: pedidoVersao,
+            pagamento
+        }
+    }
+
+    async webhook(codigoPedido: string, evento: string): Promise<any> {
+
+        const pedido: Pedido = await this.buscaUltimaVersao(codigoPedido).then()
+        console.info(pedido.getStatus())
+        if (pedido.getStatus() === StatusPedido.Pagamento && evento === EventosPedido.PAGO ) {
+            
+            await this.baixarPagamentoPedido(pedido).then()
+        }
+        
+    }
+
+    private async baixarPagamentoPedido(pedido: Pedido): Promise<PedidoVersao> {
+        const pagamento: Pagamento = await this.pagamentoService.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
+
+        pedido.setPagamento(pagamento)
         pedido.setStatus(StatusPedido.Preparacao)
 
-        var versaoPedido: Pedido = await this.database.adiciona(pedido).then()
-        
-        return versaoPedido
+        await this.database.versiona(pedido).then()
+
+        var pedidoVersao: PedidoVersao = await this.database.adiciona(pedido).then()
+
+        return pedidoVersao
     }
 }

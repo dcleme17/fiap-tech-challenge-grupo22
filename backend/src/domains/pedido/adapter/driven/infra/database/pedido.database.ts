@@ -4,6 +4,10 @@ import { IPedido } from "domains/pedido/core/applications/ports/pedido.port";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { format } from "date-fns"
 import { ObjectId } from "mongodb";
+import { Cliente } from "domains/cliente/core/entities/cliente";
+import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao";
+import { Pagamento } from "domains/pagamento/core/entities/pagamento";
+import { PagamentoVersao } from "domains/pagamento/core/entities/pagamento.versao";
 
 export class PedidoDatabase extends MongoDB implements IPedido {
 
@@ -43,10 +47,14 @@ export class PedidoDatabase extends MongoDB implements IPedido {
             horaSaida: pedido.getHoraSaida(),
             valor: pedido.getValorPedido(),
             status: pedido.getStatus(),
-            itens: pedido.getItens()
+            itens: pedido.getItens(),
+            pagamento: pedido.getPagamento()
         });
 
-        return new PedidoVersao(result.insertedId.toString(), result.insertedId.getTimestamp())
+        return new PedidoVersao(
+            result.insertedId.toString(), 
+            result.insertedId.getTimestamp(),
+            codigoPedido!)
         
     }
     
@@ -86,20 +94,7 @@ export class PedidoDatabase extends MongoDB implements IPedido {
             return null
         }
 
-        return new Pedido(
-            data?.data,
-            data?.horaEntrada,
-            data?.status,
-            data?.itens,
-            data?.valor,
-            data?.cliente,
-            data?.horaSaida,
-            data?.codigoPedido,
-            new PedidoVersao(
-                data?._id.toString(),
-                data?._id.getTimestamp()
-            )
-        )
+        return this.dataBaseToType(data)
     }     
 
     async listaPedidos(): Promise<Array<Pedido>> {
@@ -116,31 +111,69 @@ export class PedidoDatabase extends MongoDB implements IPedido {
             }
         )
 
-        let data
-
-        for await (const doc of cursor) {
-            data = doc
-            pedidos.push(new Pedido(
-                data?.data,
-                data?.horaEntrada,
-                data?.status,
-                data?.itens,
-                data?.valorPedido,
-                data?.cliente,
-                data?.horaSaida,
-                data?.codigoPedido,
-                new PedidoVersao(
-                    data?._id.toString(),
-                    data?._id.getTimestamp()
-                )
-            )  
-        )}
+        for await (const data of cursor) {
+            pedidos.push(this.dataBaseToType(data))
+        }
         
         return pedidos
 
     }  
 
-    async checkout(codigoPedido: string): Promise<any> {
+    async checkout(_codigoPedido: string): Promise<any> {
         return null;
+    }
+
+    private dataBaseToType(data: any) : Pedido {
+        
+        const pedido = new Pedido(
+            data?.data,
+            data?.horaEntrada,
+            data?.status,
+            data?.itens,
+            data?.valor
+        )
+
+        const cliente = new Cliente(
+            data?.cliente.cpf, 
+            data?.cliente.nome, 
+            data?.cliente.email,
+            new ClienteVersao(
+                data?.cliente.versao._versao,
+                data?.cliente.versao._dataCadastro
+        ))
+
+        pedido.setCliente(cliente)
+
+        const pagamento = new Pagamento(
+            data?.pagamento?.cpf,
+            data?.pagamento?.nome,
+            data?.pagamento?.email,
+            data?.pagamento?.valor,
+            data?.pagamento?.parcelamento,
+            data?.pagamento?.meio,
+            data?.pagamento?.identificadorExterno
+        )
+
+        pagamento.setMetadata(data?.pagamento?.metadata)
+        pagamento.setParceiroNegocio(data?.pagamento?.parceroNegocio)
+        pagamento.setStatus(data?.pagamento?.status)
+
+        pagamento.setVersao(new PagamentoVersao(
+                data?._id?.toString(), 
+                data?._id?.getTimestamp()
+        ))   
+        
+        pedido.setPagamento(pagamento)
+
+        pedido.setHoraSaida(data?.horaSaida)
+        pedido.setCodigoPedido(data?.codigoPedido)
+        
+        pedido.setVersao(new PedidoVersao(
+            data?._id.toString(),
+            data?._id.getTimestamp(),
+            data?.codigoPedido
+        ))   
+
+        return pedido
     }
 }

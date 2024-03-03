@@ -7,6 +7,9 @@ import { ClienteService } from 'domains/cliente/core/applications/services/clien
 import { ClienteDatabase } from 'domains/cliente/adapter/driven/infra/database/cliente.database';
 import { ProdutoDatabase } from 'domains/pedido/adapter/driven/infra/database/produto.database';
 import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
+import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
+import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
+import { PagamentoExternal } from 'domains/pagamento/adapter/driven/infra/external/pagamento.external';
 
 const router = Router();
 
@@ -32,12 +35,49 @@ router.post('/v1',
     const service = new PedidoService(
       new PedidoDatabase(), 
       new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase())
+      new ProdutoService(new ProdutoDatabase()),
+      new PagamentoService(
+        new PagamentoDatabase(), 
+        new PagamentoExternal()
+      )
     )
     const controller = new PedidoController(service)        
 
     controller.adiciona(request, next).then()
   });
+
+  router.post('/v1/webhook',
+  body('codigoPedido').trim().isLength({ min: 1, max: 20 }),
+  body('evento').trim().isLength({ min: 1, max: 20 }),
+  (request: Request, _response: Response, next: NextFunction) => {
+  
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'Informa uma evento para o pedido'
+        #swagger.description = 'Informa um evento para o pedido'
+        #swagger.operationId = 'postwebhookpedido'
+        #swagger.deprecated = false
+        #swagger.tags = ['Pedido']
+        #swagger.parameters['body'] = {
+                in: 'body',
+                'schema': { $ref: '#/definitions/post_webhook_pedido'  }
+        }
+    */
+
+    const service = new PedidoService(
+      new PedidoDatabase(), 
+      new ClienteService(new ClienteDatabase()), 
+      new ProdutoService(new ProdutoDatabase()),
+      new PagamentoService(
+        new PagamentoDatabase(), 
+        new PagamentoExternal()
+      )
+    )
+    const controller = new PedidoController(service)        
+
+    controller.webhook(request, next).then()
+  });  
 
 router.put('/v1/:codigoPedido',
 body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty().optional(),
@@ -61,7 +101,11 @@ body('itens').notEmpty().isArray(),
     const service = new PedidoService(
       new PedidoDatabase(), 
       new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase())
+      new ProdutoService(new ProdutoDatabase()),
+      new PagamentoService(
+        new PagamentoDatabase(), 
+        new PagamentoExternal()
+      )      
     )
     const controller = new PedidoController(service)           
 
@@ -84,7 +128,11 @@ router.get('/v1',
   const service = new PedidoService(
     new PedidoDatabase(), 
     new ClienteService(new ClienteDatabase()), 
-    new ProdutoService(new ProdutoDatabase())
+    new ProdutoService(new ProdutoDatabase()),
+    new PagamentoService(
+      new PagamentoDatabase(), 
+      new PagamentoExternal()
+    )      
   )
   const controller = new PedidoController(service)   
 
@@ -108,12 +156,16 @@ router.put('/v1/:codigoPedido/checkout/pix',
     const service = new PedidoService(
       new PedidoDatabase(), 
       new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase())
+      new ProdutoService(new ProdutoDatabase()),
+      new PagamentoService(
+        new PagamentoDatabase(), 
+        new PagamentoExternal()
+      )      
     )
     const controller = new PedidoController(service)   
 
     controller.checkoutPIX(request, next).then()
-});  
+});
 
 
 export default router;

@@ -3,41 +3,35 @@ import { PagamentoController } from "domains/pagamento/adapter/driver/rest/contr
 import { body } from 'express-validator'
 import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
 import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
+import { PagamentoExternal } from 'domains/pagamento/adapter/driven/infra/external/pagamento.external';
 
 const router = Router();
 
-router.post('/',  
-  body('codigoPedido').trim().isLength({ min: 1, max: 16 }).notEmpty(),
-  body('meio').trim().isLength({ min: 1, max: 6 }).notEmpty(),
-  body("nome").notEmpty(),
-  body("cpf").notEmpty(),
-  body("email").notEmpty(),
-  body("valor").notEmpty(),
-  body("parcelamento").notEmpty(),
-  body("meio").notEmpty(),
-  body("data").notEmpty(),
-  body("versao").notEmpty(),
+router.post('/v1/webhook/mercadopago',  
+  body('id').trim().isLength({ min: 1, max: 16 }).notEmpty(),
+  body('action').trim().isLength({ min: 1, max: 20 }).notEmpty(),
   (request: Request, _response: Response, next: NextFunction) => {
 
     /**
         @Swagger
         #swagger.auto = true
-        #swagger.summary = 'Cria um novo produto'
-        #swagger.description = 'Cria um novo produto a partir das informações básicas'
-        #swagger.operationId = 'postproduto'
+        #swagger.summary = 'Recebe os eventos de pagamento do parceiro'
+        #swagger.description = 'Recebe os eventos do parceiro e envia para o domínio de pedidos'
+        #swagger.operationId = 'postWebhookMercadopago'
         #swagger.deprecated = false
         #swagger.tags = ['Pagamento']
         #swagger.parameters['body'] = { 
                 in: 'body', 
-                'schema': { $ref: '#/definitions/post_pagamentos' }
+                'schema': { $ref: '#/definitions/post_webhook_mercadopago' }
         }
     */
 
-    const database = new PagamentoDatabase();
-    const service = new PagamentoService(database)
+    const database = new PagamentoDatabase()
+    const external = new PagamentoExternal()
+    const service = new PagamentoService(database, external)
     const controller = new PagamentoController(service)
 
-    controller.pagar(request, next).then()
+    controller.webhookMercadoPago(request, next).then()
   });
 
 

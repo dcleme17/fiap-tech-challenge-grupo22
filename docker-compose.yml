@@ -29,7 +29,8 @@ services:
     networks:
       - fiap-network
   backend:
-    build: "./backend/"
+    build: 
+      dockerfile: ./backend/Dockerfile
     container_name: backend
     environment:
       - NODE_ENV=production

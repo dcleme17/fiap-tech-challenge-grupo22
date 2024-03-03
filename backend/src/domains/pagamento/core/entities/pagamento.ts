@@ -1,22 +1,33 @@
-import { Double } from "mongodb"
 import { PagamentoVersao } from "./pagamento.versao"
 
+export enum ParceiroNegocioPagamento {
+    MERCADOPAGO = 'MERCADO_PAGO',
+}
+
+export enum MeioPagamento {
+    PIX = 'PIX',
+}
+
+export enum StatusPagamento {
+    PENDENTE = "PENDENTE",
+    RECEBIDO = "RECEBIDO",
+    EXPIRADO = "EXPIRADO"
+}
 export class Pagamento {
 
-    constructor(cpf: string, nome: string, email: string, valor: Double, parcelamento: number, meio: string, data: Date, versao: PagamentoVersao | null = null) {
+    constructor(cpf: string, nome: string, email: string, valor: number, parcelamento: number, meio: string, identificadorExterno: string, ) {
         this.nome = nome
         this.cpf = cpf  
         this.email = email
         this.valor = valor
         this.parcelamento = parcelamento
         this.meio = meio
-        this.data = data
-        this.versao = versao
-    }
-
-    private versao: PagamentoVersao | null
-    public getVersao(): PagamentoVersao | null {
-        return this.versao
+        this.identificadorExterno = identificadorExterno
+        this.data = new Date()
+        this.parceiroNegocio = null
+        this.status = null
+        this.metadata = null
+        this.versao = null
     }
 
     private nome: string
@@ -34,8 +45,8 @@ export class Pagamento {
         return this.email
     }
 
-    private valor: Double
-    public getValor(): Double {
+    private valor: number
+    public getValor(): number {
         return this.valor
     } 
 
@@ -49,10 +60,47 @@ export class Pagamento {
         return this.meio
     }
 
+    private identificadorExterno: string
+    public getIdentificadorExterno(): string {
+        return this.identificadorExterno
+    }
+
     private data: Date
     public getData(): Date {
         return this.data
     }
+
+    private versao: PagamentoVersao | null
+    public getVersao(): PagamentoVersao | null {
+        return this.versao
+    }
+    public setVersao(versao: PagamentoVersao): void {
+        this.versao = versao
+    }    
+
+    private parceiroNegocio: string | null
+    public getParceiroNegocio(): string | null {
+        return this.parceiroNegocio
+    }
+    public setParceiroNegocio(parceiroNegocio: string): void {
+        this.parceiroNegocio = parceiroNegocio;
+    }
+
+    private metadata: Object | null
+    public getMetadata(): Object | null {
+        return this.metadata
+    }
+    public setMetadata(metadata: Object | null): void {
+        this.metadata = metadata;
+    }     
+
+    private status: string | null
+    public getStatus(): string | null {
+        return this.status
+    }
+    public setStatus(status: StatusPagamento): void {
+        this.status = status;
+    }    
 
     /**
      * 

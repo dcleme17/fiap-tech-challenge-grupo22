@@ -13,7 +13,7 @@ export class ProdutoController {
         const result = validationResult(request)
 
         if (!result.isEmpty()) {
-            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            return next(new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array()))
         }
     
         const {codigo, produto, categoria, preco, descricao} = request.body
@@ -30,15 +30,15 @@ export class ProdutoController {
         const result = validationResult(request)
 
         if (!result.isEmpty()) {
-            throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            return next(new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array()))
         }
     
         const {produto, categoria, preco, descricao} = request.body
 
         try {
-            next( new CustomResponse(200, 'Produto atualizado', await this.service.atualiza(new Produto (request.params.codigo, produto, categoria, preco, descricao))))
+            return next( new CustomResponse(200, 'Produto atualizado', await this.service.atualiza(new Produto (request.params.codigo, produto, categoria, preco, descricao))))
         } catch (err){
-            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }
         
     }
@@ -48,14 +48,14 @@ export class ProdutoController {
             const result = validationResult(request)
 
             if (!result.isEmpty()) {
-                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+                return next(new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array()))
             }
         
             const {codigo} = request.params
                         
-            next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaUltimaVersao(codigo)))
+            return next( new CustomResponse(200, 'Produto adicionado', await this.service.buscaUltimaVersao(codigo)))
         } catch (err){
-            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }        
     }  
     
@@ -64,7 +64,7 @@ export class ProdutoController {
             const result = validationResult(request)
 
             if (!result.isEmpty()) {
-                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+                return next(new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array()))
             }
 
             /** 
@@ -75,14 +75,14 @@ export class ProdutoController {
             const { categoria } = request.query as any
 
             if(categoria) {
-                next( new CustomResponse(200, 'Busca de produto por categoria', await this.service.buscaCategoria(categoria)))
+                return next( new CustomResponse(200, 'Busca de produto por categoria', await this.service.buscaCategoria(categoria)))
 
             } else {
-                next( new CustomResponse(200, 'Listagem de produto', await this.service.buscaListaProduto()))
+                return next( new CustomResponse(200, 'Listagem de produto', await this.service.buscaListaProduto()))
             }
 
         } catch (err){
-            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         } 
 
     }  
@@ -92,13 +92,13 @@ export class ProdutoController {
             const result = validationResult(request)
 
             if (!result.isEmpty()) {
-                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+                return next(new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array()))
             }
         
             const {codigo} = request.params            
-            next( new CustomResponse(200, 'Produto removido', await this.service.remove(codigo)))
+            return next( new CustomResponse(200, 'Produto removido', await this.service.remove(codigo)))
         } catch (err){
-            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+            return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         } 
     }  
 }

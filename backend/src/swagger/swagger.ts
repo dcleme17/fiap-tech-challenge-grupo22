@@ -12,9 +12,15 @@ import {
 
 import {
     post_pedido,
-    put_pedido
+    put_pedido,
+    post_webhook_pedido
 
 } from 'domains/pedido/adapter/driver/rest/swagger/pedido.swagger'
+
+import {
+    post_webhook_mercadopago
+
+} from 'domains/pagamento/adapter/driver/rest/swagger/pagamento.swagger'
 
 export const swagger = {
     swagger: "2.0",
@@ -23,7 +29,7 @@ export const swagger = {
         title: 'Tech Challenge Fiap',              
         description: 'Conjuntos dde recursos e operações do Tech Challenge da FIAP'
     },
-    host: `localhost:3000`,
+    host: `localhost:31300`,
     tags: [                   
         {
             name: 'Cliente',             
@@ -46,6 +52,8 @@ export const swagger = {
         post_produto,
         put_produto,
         post_pedido,
-        put_pedido
+        post_webhook_pedido,
+        put_pedido,
+        post_webhook_mercadopago
     }
 }

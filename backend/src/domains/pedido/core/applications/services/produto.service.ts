@@ -15,7 +15,7 @@ export class ProdutoService {
             const ultimaVersao = await this.database.buscaUltimaVersao(produto.getCodigo())
 
             if (ultimaVersao) {
-                throw new CustomError('Já existe procuto para esse Codigo', 400, false, [])
+                throw new CustomError('Já existe produto para esse Codigo', 400, false, [])
             }
         } catch (err) {
             console.log("Nenhum produto encontrado")

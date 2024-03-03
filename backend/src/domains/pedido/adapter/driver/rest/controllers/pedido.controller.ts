@@ -19,7 +19,7 @@ export class PedidoController {
         
             const {cpf, itens} = request.body
             
-            return next(new CustomResponse(200, 'Pedido adicionado', await this.service.adiciona(cpf, this.preparaItesPedido(itens) )))
+            return next(new CustomResponse(201, 'Pedido adicionado', await this.service.adiciona(cpf, this.preparaItesPedido(itens) )))
         } catch (err){
             console.error(err)
             return next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
@@ -62,13 +62,24 @@ export class PedidoController {
         }        
     }  
     
-    async listaPedidos(request: Request, next: NextFunction): Promise<void> {
+    async listaPedidos(_request: Request, next: NextFunction): Promise<void> {
         try {         
             next( new CustomResponse(200, 'Pedido encontrado', await this.service.listaPedidos()))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }        
     }  
+
+    async webhook(request: Request, next: NextFunction): Promise<void> {
+        try {       
+            
+            const { codigoPedido, evento } = request.body
+
+            next( new CustomResponse(201, 'Webhook Processado', await this.service.webhook(codigoPedido, evento)))
+        } catch (err){
+            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+        }        
+    }      
     
     async checkoutPIX(request: Request, next: NextFunction): Promise<void> {
 

@@ -1,3 +1,5 @@
+import { EventosPedido } from "domains/pedido/core/entities/pedido"
+
 export const post_pedido = {
     $cpf: "12345678910",
     $itens: [
@@ -18,4 +20,9 @@ export const put_pedido = {
             $observacao: "Sem cebola"
         }
     ]
+}
+
+export const post_webhook_pedido = {
+    $codigoPedido: '20240303_000006',
+    $evento: EventosPedido.PAGO
 }

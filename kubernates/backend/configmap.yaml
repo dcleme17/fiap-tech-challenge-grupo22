@@ -4,3 +4,5 @@ metadata:
   name: backend
 data:
   PORT: "3000"
+  MERCADOPAGO_URL: https://api.mercadopago.com/
+  MERCADOPAGO_WEBHOOK_URL: http://fiap.com.br

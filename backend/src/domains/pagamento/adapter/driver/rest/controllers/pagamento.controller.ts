@@ -9,7 +9,7 @@ export class PagamentoController {
 
     constructor(private readonly service: PagamentoService) {}
 
-    async pagar(request: Request, next: NextFunction): Promise<void> {
+    async webhookMercadoPago(request: Request, next: NextFunction): Promise<void> {
 
         try {
             const result = validationResult(request)
@@ -18,27 +18,9 @@ export class PagamentoController {
                 throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
             }  
 
-            const {
-                nome,
-                cpf,
-                email,
-                valor,
-                parcelamento,
-                meio,
-                data,
-                versao
-            } = request.body
+            const {action, id } = request.body
 
-            next(new CustomResponse(200, 'Pedido recebido', await this.service.pagar(new Pagamento(
-                nome,
-                cpf,
-                email,
-                valor,
-                parcelamento,
-                meio,
-                data,
-                versao
-            ))))
+            next(new CustomResponse(201, 'Webhook Processado', await this.service.webhookPagamentos(id, action)))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
         }
