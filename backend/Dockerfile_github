@@ -5,8 +5,8 @@ COPY backend/package.json backend/pnpm-lock.yaml ./
 COPY backend/tsconfig.json .
 COPY backend/src ./src
 RUN npm install -g pnpm
-RUN pnpm --prefix ./backend install
-RUN pnpm tsx ./backend/src/swagger.ts
+RUN pnpm --prefix install
+RUN pnpm tsx ./src/swagger.ts
 ENV PORT=3000
 ENV DATABASE_URL=mongodb://root:mongo2023@localhost:27017
 EXPOSE 3000
