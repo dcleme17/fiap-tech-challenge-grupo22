@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: backend-tech-challange
-        image: dcleme17/fiap-tc-backend:latest
+        image: dcleme17/fiap-tc-backend:fase2
         imagePullPolicy: Always        
         resources:
           limits:

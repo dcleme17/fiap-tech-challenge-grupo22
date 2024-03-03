@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/v1',
   (_request: Request, _response: Response, next: NextFunction) => {
-    return next(new CustomResponse(200, 'OK', null));
+    return next(new CustomResponse(200, 'OK - FASE 2', null));
   });
 
 
