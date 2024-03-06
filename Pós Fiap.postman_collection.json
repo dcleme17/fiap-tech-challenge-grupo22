@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "18aa07aa-126c-45d2-904c-fea2e45dc790",
+		"name": "Pós Fiap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32144522"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Consultar clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/v1/12345678910",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"12345678910"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir clientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Maria dos Santos\",\r\n  \"cpf\": \"12345678910\",\r\n  \"email\": \"mariasantos@terra.com.br\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar clientes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Maria do Santos\",\r\n    \"email\": \"mariasantos@uol.com.br\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/v1/12345678910",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"12345678910"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Incluir produtos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"codigo\": \"000003\",\r\n  \"produto\":\"nuggets\",\r\n  \"categoria\": \"Complemento\",\r\n  \"preco\": \"12.00\",\r\n  \"descricao\": \"frito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/produtos/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar produtos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"produto\":\"guaraná\",\r\n  \"categoria\": \"bebidas\",\r\n  \"preco\": \"7.00\",\r\n  \"descricao\": \"lata\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/produtos/v1/000004",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"000004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/produtos/v1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista produtos por categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/produtos/v1?categoria=bebidas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "categoria",
+									"value": "bebidas"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir produtos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/produtos/v1/000005",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"000005"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Incluir pedidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cpf\": \"12345678910\",\r\n  \"itens\": [\r\n    {\r\n      \"codigoProduto\": \"000001\",\r\n      \"quantidade\": 1,\r\n      \"observacao\": \"sem observação\"\r\n    },\r\n    {\r\n      \"codigoProduto\": \"000002\",\r\n      \"quantidade\": 1,\r\n      \"observacao\": \"sem sal\"\r\n    },    \r\n    {\r\n      \"codigoProduto\": \"000004\",\r\n      \"quantidade\": 3,\r\n      \"observacao\": \"sem gelo\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos/v1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos",
+								"v1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar pedidos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cpf\": \"12345678910\",\r\n  \"itens\": [\r\n    {\r\n      \"codigoProduto\": \"000001\",\r\n      \"quantidade\": 5,\r\n      \"observacao\": \"sem cebola\"\r\n    },\r\n    {\r\n      \"codigoProduto\": \"000002\",\r\n      \"quantidade\": 3,\r\n      \"observacao\": \"sem sal\"\r\n    },    \r\n    {\r\n      \"codigoProduto\": \"000004\",\r\n      \"quantidade\": 2,\r\n      \"observacao\": \"com gelo\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos/v1/20240304_000001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos",
+								"v1",
+								"20240304_000001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout do Pedidos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pedidos/v1/20240128_000001/checkout/pix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pedidos",
+								"v1",
+								"20240128_000001",
+								"checkout",
+								"pix"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Mercado Pago",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"action\": \"state_FINISHED\",\r\n  \"id\": \"20240304_000001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pagamentos/v1/webhook/mercadopago",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pagamentos",
+								"v1",
+								"webhook",
+								"mercadopago"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
