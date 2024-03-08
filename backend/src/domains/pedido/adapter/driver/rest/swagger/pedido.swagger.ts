@@ -26,3 +26,7 @@ export const post_webhook_pedido = {
     $codigoPedido: '20240303_000006',
     $evento: EventosPedido.PAGO
 }
+
+export const put_pedido_status = {
+    $statusPedido: "Em Preparação",
+}

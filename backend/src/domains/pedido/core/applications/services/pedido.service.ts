@@ -39,8 +39,8 @@ export class PedidoService {
 
         for(let i = 0; i < itens.length; i++) {
 
+            console.log("itens[i]: " + JSON.stringify(itens[i]))
             const item = itens[i];
-
             const produto = await this.produtoService.buscaUltimaVersao(item.getCodigoProduto()).then()
 
             const detalhado = new ItemPedido(
@@ -73,6 +73,77 @@ export class PedidoService {
         return pedidoVersao
     }
 
+    async alteraStatus(cpf: string | null, itens: Array<ItemPedido>, codigoPedido: string | null = null, status: StatusPedido): Promise<PedidoVersao> {
+
+        let cliente: Cliente | null
+        const itensPedido: Array<ItemPedido> = []
+        let valorPedido: number = 0.0
+
+        if (cpf) {
+            cliente = await this.clienteService.buscaUltimaVersao(cpf).then()
+        } else {
+            cliente = null;
+        }
+
+        /** busca os dados dos produtos e calcula o valor do item */
+
+        for(let i = 0; i < itens.length; i++) {
+
+            console.log("itens[i]: " + JSON.stringify(itens[i]))
+            const item = itens[i];
+            const produto = await this.produtoService.buscaUltimaVersao(item.getCodigoProduto()).then()
+
+            const detalhado = new ItemPedido(
+                produto.getCodigo(),
+                Number(item.getQuantidade()),
+                item.getObservacao(),
+                produto.getDescricao(),
+                (Number(produto.getPreco()) * Number(item.getQuantidade()))
+            )
+
+            itensPedido.push(detalhado)
+
+            valorPedido = valorPedido + detalhado.getValor()!
+            
+        }
+
+        const pedido = new Pedido(
+            format(new Date(), 'dd/MM/yyyy'), 
+            format(new Date(), 'hh:mm:ss'), 
+            status,   
+            itensPedido,      
+            valorPedido
+        )
+ 
+        pedido.setCliente(cliente!)
+        pedido.setCodigoPedido(codigoPedido!)
+
+        var pedidoVersao: PedidoVersao = await this.database.adiciona(pedido).then()
+
+        return pedidoVersao
+    }
+
+    private preparaItesPedido(itens: Array<any>) {
+        const itensPedido: Array<ItemPedido> = []
+
+        for(let i = 0; i < itens.length; i++) {
+
+            const {
+                codigoProduto,
+                quantidade,
+                observacao,
+            } = itens[i]
+
+            itensPedido.push(new ItemPedido(
+                codigoProduto,
+                quantidade,
+                observacao
+            ))
+        }
+
+        return itensPedido
+    }
+
     async atualiza(codigoPedido: string, cpf: string | null, itens: Array<ItemPedido>): Promise<PedidoVersao> {
 
         const ultimaVersao = await this.database.buscaUltimaVersao(codigoPedido)
@@ -93,6 +164,45 @@ export class PedidoService {
         await this.database.versiona(ultimaVersao).then()
 
         return pedidoVersao
+    }
+ 
+    async atualizaStatus(codigoPedido: string, statusPedido: string): Promise<PedidoVersao> {
+
+        if (!Pedido.isStatusValid(statusPedido)) {
+            throw new CustomError('Status do Pedido Inválido', 404, false, [])
+        }
+        const ultimaVersao = await this.database.buscaUltimaVersao(codigoPedido)
+
+        if (!ultimaVersao) {
+            throw new CustomError('Pedido não encontrado', 404, false, [])
+        }
+
+        if (ultimaVersao.getStatus() !== StatusPedido.Recebido) {
+            throw new CustomError('O pedido não pode mais ser alterado', 400, false, [])
+        }      
+
+        var cpf = ultimaVersao.getCliente()?.getCpf()!;
+        var itens = ultimaVersao.getItens();
+
+        /** Aqui deveria ser uma única transação para não ter problemas ... */
+        /** Mas dado o horário, me recuso. */
+
+        const pedidoVersao = await this.alteraStatus(cpf, this.preparaItesPedido(itens), codigoPedido, statusPedido as StatusPedido).then()
+
+        await this.database.versiona(ultimaVersao).then()
+
+        return pedidoVersao
+    }
+
+    async buscaStatus(codigoPedido: string): Promise<StatusPedido > {
+
+        const ultimaVersao = await this.database.buscaUltimaVersao(codigoPedido)
+
+        if (ultimaVersao) {
+            return ultimaVersao.getStatus()!;
+        } else {
+            throw new CustomError('Pedido não encontrado com o código informado', 404, false, [])
+        }
     }
 
     async buscaUltimaVersao(codigoPedido: string): Promise<Pedido> {
@@ -183,6 +293,7 @@ export class PedidoService {
 
         pedido.setPagamento(pagamento)
         pedido.setStatus(StatusPedido.Preparacao)
+        
 
         await this.database.versiona(pedido).then()
 

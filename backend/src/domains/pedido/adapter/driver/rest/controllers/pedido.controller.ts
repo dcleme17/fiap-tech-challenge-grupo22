@@ -47,6 +47,41 @@ export class PedidoController {
         
     }
 
+    async atualizaStatus(request: Request, next: NextFunction): Promise<void> {
+
+        try {
+            const result = validationResult(request)
+
+            if (!result.isEmpty()) {
+                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            }
+        
+            const {statusPedido} = request.body        
+            const {codigoPedido} = request.params  
+
+            next( new CustomResponse(200, 'Status Pedido atualizado', await this.service.atualizaStatus(codigoPedido, statusPedido)))
+        } catch (err){
+            console.error(err)
+            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+        }
+        
+    }
+
+    async buscaStatus(request: Request, next: NextFunction): Promise<void>  {
+        try {
+            const result = validationResult(request)
+
+            if (!result.isEmpty()) {
+                throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
+            }
+        
+            const {codigoPedido} = request.params            
+            next( new CustomResponse(200, 'Status do Pedido', await this.service.buscaStatus(codigoPedido)))
+        } catch (err){
+            next(new CustomError('Ops, algo deu errado na operação', 500, false, err))
+        }        
+    }  
+
     async buscaUltimaVersao(request: Request, next: NextFunction): Promise<void> {
         try {
             const result = validationResult(request)
@@ -55,7 +90,7 @@ export class PedidoController {
                 throw new CustomError('Parâmetros inválidos. Por favor, verifique as informações enviadas.', 400, false, result.array())
             }
         
-            const {codigoPedido} = request.body            
+            const {codigoPedido} = request.params            
             next( new CustomResponse(200, 'Pedido encontrado', await this.service.buscaUltimaVersao(codigoPedido)))
         } catch (err){
             next(new CustomError('Ops, algo deu errado na operação', 500, false, err))

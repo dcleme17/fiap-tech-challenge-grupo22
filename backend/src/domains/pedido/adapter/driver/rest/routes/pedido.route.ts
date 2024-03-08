@@ -80,6 +80,7 @@ router.post('/v1',
   });  
 
 router.put('/v1/:codigoPedido',
+param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
 body('cpf').trim().isLength({ min: 11, max: 11 }).notEmpty().optional(),
 body('itens').notEmpty().isArray(),
   (request: Request, _response: Response, next: NextFunction) => {
@@ -111,6 +112,68 @@ body('itens').notEmpty().isArray(),
 
     controller.atualiza(request, next).then()
   });
+
+  router.get('/v1/:codigoPedido/status',
+  param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  (request: Request, _response: Response, next: NextFunction) => {
+    
+    /**
+        @Swagger
+        #swagger.auto = true
+        #swagger.summary = 'consulta status do pedido'
+        #swagger.description = 'Consulta o status do pedido'
+        #swagger.operationId = 'putpedido'
+        #swagger.deprecated = false
+        #swagger.tags = ['Pedido']
+    */   
+
+    const service = new PedidoService(
+      new PedidoDatabase(), 
+      new ClienteService(new ClienteDatabase()), 
+      new ProdutoService(new ProdutoDatabase()),
+      new PagamentoService(
+        new PagamentoDatabase(), 
+        new PagamentoExternal()
+      )      
+    )
+    const controller = new PedidoController(service)           
+
+    controller.buscaStatus(request, next).then()
+  });
+
+
+  router.put('/v1/:codigoPedido/status',
+  param('codigoPedido').trim().isLength({ min: 1, max: 15 }).notEmpty(),
+  body('statusPedido').trim().isLength({ min: 1, max: 30 }).notEmpty().optional(),
+    (request: Request, _response: Response, next: NextFunction) => {
+      
+      /**
+          @Swagger
+          #swagger.auto = true
+          #swagger.summary = 'Atualiza um pedido'
+          #swagger.description = 'Atualiza os dados de um pedido pelo codigo'
+          #swagger.operationId = 'putpedido'
+          #swagger.deprecated = false
+          #swagger.tags = ['Pedido']
+          #swagger.parameters['body'] = { 
+                  in: 'body', 
+                  'schema': { $ref: '#/definitions/put_pedido_status' }
+          }
+      */   
+  
+      const service = new PedidoService(
+        new PedidoDatabase(), 
+        new ClienteService(new ClienteDatabase()), 
+        new ProdutoService(new ProdutoDatabase()),
+        new PagamentoService(
+          new PagamentoDatabase(), 
+          new PagamentoExternal()
+        )      
+      )
+      const controller = new PedidoController(service)           
+  
+      controller.atualizaStatus(request, next).then()
+    });
 
 router.get('/v1',
  (request: Request, _response: Response, next: NextFunction) => {

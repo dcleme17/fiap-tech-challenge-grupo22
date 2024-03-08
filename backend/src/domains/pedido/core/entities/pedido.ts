@@ -125,4 +125,13 @@ export class Pedido {
 
         return JSON.stringify(comparable1).toLowerCase() === JSON.stringify(comparable2).toLowerCase()
     }
+
+    /**
+     * 
+     * @param comparable 
+     * @returns boolean
+     */
+    static isStatusValid(status: string): boolean {
+        return Object.values(StatusPedido).includes(status as StatusPedido);
+    }
 }
