@@ -182,3 +182,11 @@ Mongo Express (Interface para manutenção do MongoDB)
 ```bash
 http://localhost:8081 
 ```
+Collections
+```bash
+https://meera-studio.postman.co/workspace/cdf5f9ab-59c8-420c-acb6-144f0b6195b1/request/1116492-7346a3a7-b607-42aa-86d6-dc6f08756c6d
+```
+Swagger Hub
+```bash
+https://app.swaggerhub.com/apis/YUMIALP/tech-challenge_fiap/1.0.0
+```
