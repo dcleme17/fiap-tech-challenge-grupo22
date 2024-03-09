@@ -15,6 +15,7 @@ Grupo 22
 **Sistema de Autoatendimento de Pedidos - Lanchonetes**
 
 **Clientes**
+
 Incluir, Alterar e Consultar os Clientes:
 
 Identificação por CPF;
@@ -22,9 +23,11 @@ Identificação por CPF;
 A inclusão deverá ter CPF, nome e e-mail.
 
 **Produtos**
+
 Incluir, Alterar, Excluir e Listar todos ou por categorias os Produtos.
 
 **Pedidos**
+
 Incluir, Alterar, Listar os Pedidos:
 
 O combo poderá ter ou não os seguintes itens: lanche, acompanhamento e bebida. 
@@ -35,19 +38,21 @@ O pedido deverá ter os seguintes status: Recebido, em Preparação, Pronto e Fi
 Deverá aparecer em um monitor para o cliente acompanhar;
 
 A lista de pedidos deverá retorná-los com suas descrições e ordenados com a seguinte regra:
-  
-    Pronto, Em Preparação e Recebido;
-  
-    Pedidos mais antigos primeiro e mais novos depois
-  
-    Pedidos finalizados não devem aparecer na lista.
+
+   Pronto, Em Preparação e Recebido;
+   
+   Pedidos mais antigos primeiro e mais novos depois
+   
+   Pedidos finalizados não devem aparecer na lista.
   
 Quando o pedido estiver pronto, o sistema deverá notificar o cliente para retirada. Ao ser    retirado, o pedido deve ser atualizado para status finalizado.
 
 **Fazer Checkout do Pedido:**
+
 Deverá receber os produtos solicitados e retornar à identificação do pedido;
 
 **Pagamento:**
+
 A forma de pagamento será via QRCode do Mercado Pago;
 
 Webhook para receber confirmação de pagamento aprovado ou recusado;
@@ -58,6 +63,7 @@ Após o pedido confirmado e pago, ele é enviado para cozinha.
 
 ## Requisitos de infraestrutura
 **Criar uma arquitetura em Kubernetes que atenda aos requisitos**
+
 Escalabilidade com aumento e diminuição de Pods conforme demanda;
 
 Arquivos manifestos (yaml) precisam estar no Github junto com a nova verão do código.
