@@ -3,7 +3,7 @@ import { ProdutoVersao } from "domains/pedido/core/entities/produto.versao";
 import { ProdutoDatabase } from "domains/pedido/adapter/driven/infra/database/produto.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
-export class ProdutoService {
+export class ProdutoUseCases {
 
     constructor(private readonly database: ProdutoDatabase) {
         this.database = database

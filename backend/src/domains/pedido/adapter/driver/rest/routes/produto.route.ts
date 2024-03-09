@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { ProdutoController } from "domains/pedido/adapter/driver/rest/controllers/produto.controller"
 import { body, param, query } from 'express-validator'
-import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
+import { ProdutoUseCases } from 'domains/pedido/core/applications/usecases/produto.usecases';
 import { ProdutoDatabase } from 'domains/pedido/adapter/driven/infra/database/produto.database';
 
 const router = Router();
@@ -29,7 +29,7 @@ router.post('/v1',
     */
 
     const database = new ProdutoDatabase();
-    const service = new ProdutoService(database)
+    const service = new ProdutoUseCases(database)
     const controller = new ProdutoController(service)
 
     controller.adiciona(request, next).then()
@@ -58,7 +58,7 @@ router.put('/v1/:codigo',
     */    
 
     const database = new ProdutoDatabase();
-    const service = new ProdutoService(database)
+    const service = new ProdutoUseCases(database)
     const controller = new ProdutoController(service)
 
     controller.atualiza(request, next).then()
@@ -79,7 +79,7 @@ router.delete('/v1/:codigo',
     */    
 
     const database = new ProdutoDatabase();
-    const service = new ProdutoService(database)
+    const service = new ProdutoUseCases(database)
     const controller = new ProdutoController(service)
     console.log("ACESSOROUTE -> PRODUTO DELETE")
     controller.remove(request, next).then()
@@ -105,7 +105,7 @@ router.get('/v1',
   */        
 
   const database = new ProdutoDatabase();
-  const service = new ProdutoService(database)
+  const service = new ProdutoUseCases(database)
   const controller = new ProdutoController(service)
 
   controller.buscaProduto(request, next).then()

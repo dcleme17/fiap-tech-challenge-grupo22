@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { ClienteController } from "domains/cliente/adapter/driver/rest/controllers/cliente.controller"
 import { body, param } from 'express-validator'
-import { ClienteService } from 'domains/cliente/core/applications/services/cliente.service';
+import { ClienteUseCases } from 'domains/cliente/core/applications/usecases/cliente.usecases';
 import { ClienteDatabase } from 'domains/cliente/adapter/driven/infra/database/cliente.database';
 
 const router = Router();
@@ -27,7 +27,7 @@ router.post('/v1',
     */
 
     const database = new ClienteDatabase();
-    const service = new ClienteService(database)
+    const service = new ClienteUseCases(database)
     const controller = new ClienteController(service)
 
     controller.adiciona(request, next).then()
@@ -54,7 +54,7 @@ router.put('/v1/:cpf',
     */    
 
     const database = new ClienteDatabase();
-    const service = new ClienteService(database)
+    const service = new ClienteUseCases(database)
     const controller = new ClienteController(service)
 
     controller.atualiza(request, next).then()
@@ -75,7 +75,7 @@ router.get('/v1/:cpf',
     */        
 
     const database = new ClienteDatabase();
-    const service = new ClienteService(database)
+    const service = new ClienteUseCases(database)
     const controller = new ClienteController(service)
 
     controller.buscaUltimaVersao(request, next).then()

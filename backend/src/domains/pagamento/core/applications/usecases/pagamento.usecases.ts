@@ -6,7 +6,7 @@ import { PagamentoExternal } from "domains/pagamento/adapter/driven/infra/extern
 import { StatusPagamentoMercadoPago } from "domains/pagamento/adapter/driven/infra/external/mercadopago/mercadopago";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
 
-export class PagamentoService {
+export class PagamentoUseCases {
 
     constructor(
         private readonly database: PagamentoDatabase,

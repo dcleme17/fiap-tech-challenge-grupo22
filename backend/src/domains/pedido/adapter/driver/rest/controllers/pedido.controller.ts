@@ -2,12 +2,12 @@ import {NextFunction, Request} from 'express';
 import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
-import { PedidoService } from 'domains/pedido/core/applications/services/pedido.service';
+import { PedidoUseCases } from 'domains/pedido/core/applications/usecases/pedido.usecases';
 import { ItemPedido } from 'domains/pedido/core/entities/itemPedido';
 
 export class PedidoController {
 
-    constructor(private readonly service: PedidoService) {}
+    constructor(private readonly service: PedidoUseCases) {}
 
     async adiciona(request: Request, next: NextFunction): Promise<void> {
         try {

@@ -1,13 +1,13 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { PedidoController } from "domains/pedido/adapter/driver/rest/controllers/pedido.controller"
 import { body, param } from 'express-validator'
-import { PedidoService } from 'domains/pedido/core/applications/services/pedido.service';
+import { PedidoUseCases } from 'domains/pedido/core/applications/usecases/pedido.usecases';
 import { PedidoDatabase } from 'domains/pedido/adapter/driven/infra/database/pedido.database';
-import { ClienteService } from 'domains/cliente/core/applications/services/cliente.service';
+import { ClienteUseCases } from 'domains/cliente/core/applications/usecases/cliente.usecases';
 import { ClienteDatabase } from 'domains/cliente/adapter/driven/infra/database/cliente.database';
 import { ProdutoDatabase } from 'domains/pedido/adapter/driven/infra/database/produto.database';
-import { ProdutoService } from 'domains/pedido/core/applications/services/produto.service';
-import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
+import { ProdutoUseCases } from 'domains/pedido/core/applications/usecases/produto.usecases';
+import { PagamentoUseCases } from 'domains/pagamento/core/applications/usecases/pagamento.usecases';
 import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
 import { PagamentoExternal } from 'domains/pagamento/adapter/driven/infra/external/pagamento.external';
 
@@ -32,11 +32,11 @@ router.post('/v1',
         }
     */
 
-    const service = new PedidoService(
+    const service = new PedidoUseCases(
       new PedidoDatabase(), 
-      new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase()),
-      new PagamentoService(
+      new ClienteUseCases(new ClienteDatabase()), 
+      new ProdutoUseCases(new ProdutoDatabase()),
+      new PagamentoUseCases(
         new PagamentoDatabase(), 
         new PagamentoExternal()
       )
@@ -65,11 +65,11 @@ router.post('/v1',
         }
     */
 
-    const service = new PedidoService(
+    const service = new PedidoUseCases(
       new PedidoDatabase(), 
-      new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase()),
-      new PagamentoService(
+      new ClienteUseCases(new ClienteDatabase()), 
+      new ProdutoUseCases(new ProdutoDatabase()),
+      new PagamentoUseCases(
         new PagamentoDatabase(), 
         new PagamentoExternal()
       )
@@ -99,11 +99,11 @@ body('itens').notEmpty().isArray(),
         }
     */   
 
-    const service = new PedidoService(
+    const service = new PedidoUseCases(
       new PedidoDatabase(), 
-      new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase()),
-      new PagamentoService(
+      new ClienteUseCases(new ClienteDatabase()), 
+      new ProdutoUseCases(new ProdutoDatabase()),
+      new PagamentoUseCases(
         new PagamentoDatabase(), 
         new PagamentoExternal()
       )      
@@ -127,11 +127,11 @@ body('itens').notEmpty().isArray(),
         #swagger.tags = ['Pedido']
     */   
 
-    const service = new PedidoService(
+    const service = new PedidoUseCases(
       new PedidoDatabase(), 
-      new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase()),
-      new PagamentoService(
+      new ClienteUseCases(new ClienteDatabase()), 
+      new ProdutoUseCases(new ProdutoDatabase()),
+      new PagamentoUseCases(
         new PagamentoDatabase(), 
         new PagamentoExternal()
       )      
@@ -161,11 +161,11 @@ body('itens').notEmpty().isArray(),
           }
       */   
   
-      const service = new PedidoService(
+      const service = new PedidoUseCases(
         new PedidoDatabase(), 
-        new ClienteService(new ClienteDatabase()), 
-        new ProdutoService(new ProdutoDatabase()),
-        new PagamentoService(
+        new ClienteUseCases(new ClienteDatabase()), 
+        new ProdutoUseCases(new ProdutoDatabase()),
+        new PagamentoUseCases(
           new PagamentoDatabase(), 
           new PagamentoExternal()
         )      
@@ -188,11 +188,11 @@ router.get('/v1',
       #swagger.tags = ['Pedido']
   */        
 
-  const service = new PedidoService(
+  const service = new PedidoUseCases(
     new PedidoDatabase(), 
-    new ClienteService(new ClienteDatabase()), 
-    new ProdutoService(new ProdutoDatabase()),
-    new PagamentoService(
+    new ClienteUseCases(new ClienteDatabase()), 
+    new ProdutoUseCases(new ProdutoDatabase()),
+    new PagamentoUseCases(
       new PagamentoDatabase(), 
       new PagamentoExternal()
     )      
@@ -216,11 +216,11 @@ router.put('/v1/:codigoPedido/checkout/pix',
         #swagger.tags = ['Pedido']
     */ 
 
-    const service = new PedidoService(
+    const service = new PedidoUseCases(
       new PedidoDatabase(), 
-      new ClienteService(new ClienteDatabase()), 
-      new ProdutoService(new ProdutoDatabase()),
-      new PagamentoService(
+      new ClienteUseCases(new ClienteDatabase()), 
+      new ProdutoUseCases(new ProdutoDatabase()),
+      new PagamentoUseCases(
         new PagamentoDatabase(), 
         new PagamentoExternal()
       )      

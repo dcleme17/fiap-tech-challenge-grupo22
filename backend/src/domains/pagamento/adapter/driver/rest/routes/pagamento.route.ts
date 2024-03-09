@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { PagamentoController } from "domains/pagamento/adapter/driver/rest/controllers/pagamento.controller"
 import { body } from 'express-validator'
-import { PagamentoService } from 'domains/pagamento/core/applications/services/pagamento.service';
+import { PagamentoUseCases } from 'domains/pagamento/core/applications/usecases/pagamento.usecases';
 import { PagamentoDatabase } from 'domains/pagamento/adapter/driven/infra/database/pagamento.database';
 import { PagamentoExternal } from 'domains/pagamento/adapter/driven/infra/external/pagamento.external';
 
@@ -28,7 +28,7 @@ router.post('/v1/webhook/mercadopago',
 
     const database = new PagamentoDatabase()
     const external = new PagamentoExternal()
-    const service = new PagamentoService(database, external)
+    const service = new PagamentoUseCases(database, external)
     const controller = new PagamentoController(service)
 
     controller.webhookMercadoPago(request, next).then()

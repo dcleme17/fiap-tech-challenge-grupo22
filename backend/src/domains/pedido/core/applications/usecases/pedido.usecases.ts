@@ -3,24 +3,24 @@ import { ItemPedido } from "domains/pedido/core/entities/itemPedido";
 import { PedidoVersao } from "domains/pedido/core/entities/pedido.versao";
 import { PedidoDatabase } from "domains/pedido/adapter/driven/infra/database/pedido.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
-import { ClienteService } from "domains/cliente/core/applications/services/cliente.service";
+import { ClienteUseCases } from "domains/cliente/core/applications/usecases/cliente.usecases";
 import { Cliente } from "domains/cliente/core/entities/cliente";
 import { format } from "date-fns";
-import { ProdutoService } from "./produto.service";
-import { PagamentoService } from "domains/pagamento/core/applications/services/pagamento.service";
+import { ProdutoUseCases } from "./produto.usecases";
+import { PagamentoUseCases } from "domains/pagamento/core/applications/usecases/pagamento.usecases";
 import { MeioPagamento, Pagamento, StatusPagamento } from "domains/pagamento/core/entities/pagamento";
 
-export class PedidoService {
+export class PedidoUseCases {
 
     constructor(
         private readonly database: PedidoDatabase,
-        private readonly clienteService: ClienteService,
-        private readonly produtoService: ProdutoService,
-        private readonly pagamentoService: PagamentoService
+        private readonly clienteUseCases: ClienteUseCases,
+        private readonly produtoService: ProdutoUseCases,
+        private readonly pagamentoUseCases: PagamentoUseCases
     ) {
         this.database = database
-        this.clienteService = clienteService
-        this.pagamentoService = pagamentoService
+        this.clienteUseCases = clienteUseCases
+        this.pagamentoUseCases = pagamentoUseCases
     }
 
     async adiciona(cpf: string | null, itens: Array<ItemPedido>, codigoPedido: string | null = null): Promise<PedidoVersao> {
@@ -30,7 +30,7 @@ export class PedidoService {
         let valorPedido: number = 0.0
 
         if (cpf) {
-            cliente = await this.clienteService.buscaUltimaVersao(cpf).then()
+            cliente = await this.clienteUseCases.buscaUltimaVersao(cpf).then()
         } else {
             cliente = null;
         }
@@ -80,7 +80,7 @@ export class PedidoService {
         let valorPedido: number = 0.0
 
         if (cpf) {
-            cliente = await this.clienteService.buscaUltimaVersao(cpf).then()
+            cliente = await this.clienteUseCases.buscaUltimaVersao(cpf).then()
         } else {
             cliente = null;
         }
@@ -246,7 +246,7 @@ export class PedidoService {
 
         console.info(pedido)
 
-        await this.pagamentoService.criar(new Pagamento(
+        await this.pagamentoUseCases.criar(new Pagamento(
             pedido.getCliente()?.getCpf()!,
             pedido.getCliente()?.getNome()!,
             pedido.getCliente()?.getEmail()!,
@@ -265,7 +265,7 @@ export class PedidoService {
 
         console.info(pedido)
 
-        const pagamento = await this.pagamentoService.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
+        const pagamento = await this.pagamentoUseCases.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
 
         pedido.setPagamento(pagamento)
 
@@ -289,7 +289,7 @@ export class PedidoService {
     }
 
     private async baixarPagamentoPedido(pedido: Pedido): Promise<PedidoVersao> {
-        const pagamento: Pagamento = await this.pagamentoService.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
+        const pagamento: Pagamento = await this.pagamentoUseCases.buscaUltimaVersao(pedido.getCodigoPedido()!).then()
 
         pedido.setPagamento(pagamento)
         pedido.setStatus(StatusPedido.Preparacao)

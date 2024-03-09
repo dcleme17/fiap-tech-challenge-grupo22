@@ -2,12 +2,12 @@ import {NextFunction, Request, Response} from 'express';
 import { validationResult } from 'express-validator';
 import { CustomError } from "domains/suporte/entities/custom.error";
 import { CustomResponse } from "domains/suporte/entities/custom.response";
-import { ClienteService } from 'domains/cliente/core/applications/services/cliente.service';
+import { ClienteUseCases } from 'domains/cliente/core/applications/usecases/cliente.usecases';
 import { Cliente } from 'domains/cliente/core/entities/cliente';
 
 export class ClienteController {
 
-    constructor(private readonly service: ClienteService) {}
+    constructor(private readonly service: ClienteUseCases) {}
 
     async adiciona(request: Request, next: NextFunction): Promise<void> {
         try {

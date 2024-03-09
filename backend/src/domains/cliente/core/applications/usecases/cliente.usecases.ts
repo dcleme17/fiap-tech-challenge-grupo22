@@ -3,7 +3,7 @@ import { ClienteVersao } from "domains/cliente/core/entities/cliente.versao";
 import { ClienteDatabase } from "domains/cliente/adapter/driven/infra/database/cliente.database"
 import { CustomError } from "domains/suporte/entities/custom.error"
 
-export class ClienteService {
+export class ClienteUseCases {
 
     constructor(private readonly database: ClienteDatabase) {
         this.database = database
