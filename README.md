@@ -10,6 +10,63 @@ Grupo 22
 
 **Banco:** MongoDB
 
+## Requisitos de negócio
+
+**Sistema de Autoatendimento de Pedidos - Lanchonetes**
+
+**Clientes**
+
+Incluir, Alterar e Consultar os Clientes:
+
+Identificação por CPF;
+
+A inclusão deverá ter CPF, nome e e-mail.
+
+**Produtos**
+
+Incluir, Alterar, Excluir e Listar todos ou por categorias os Produtos.
+
+**Pedidos**
+
+Incluir, Alterar, Listar os Pedidos:
+
+O combo poderá ter ou não os seguintes itens: lanche, acompanhamento e bebida. 
+Deve ser exibido o nome, descrição e preço de cada produto;
+
+O pedido deverá ter os seguintes status: Recebido, em Preparação, Pronto e Finalizado.
+
+Deverá aparecer em um monitor para o cliente acompanhar;
+
+A lista de pedidos deverá retorná-los com suas descrições e ordenados com a seguinte regra:
+
+   Pronto, Em Preparação e Recebido;
+   
+   Pedidos mais antigos primeiro e mais novos depois
+   
+   Pedidos finalizados não devem aparecer na lista.
+  
+Quando o pedido estiver pronto, o sistema deverá notificar o cliente para retirada. Ao ser    retirado, o pedido deve ser atualizado para status finalizado.
+
+**Fazer Checkout do Pedido:**
+
+Deverá receber os produtos solicitados e retornar à identificação do pedido;
+
+**Pagamento:**
+
+A forma de pagamento será via QRCode do Mercado Pago;
+
+Webhook para receber confirmação de pagamento aprovado ou recusado;
+
+Consultar o status do pagamento pedido (aprovado ou não);
+
+Após o pedido confirmado e pago, ele é enviado para cozinha.
+
+## Requisitos de infraestrutura
+**Criar uma arquitetura em Kubernetes que atenda aos requisitos**
+
+Escalabilidade com aumento e diminuição de Pods conforme demanda;
+
+Arquivos manifestos (yaml) precisam estar no Github junto com a nova verão do código.
 
 
 ## Preparação para desenvolver localmente
@@ -169,11 +226,14 @@ Backend (API)
 ```bash
 http://localhost:3000/api/<dominio>/<operações>
 ```
-Documentação (Swagger) será exposta na URL abaixo
+Documentação (Swagger Hub) será exposta na URL abaixo
 ```bash
-http://localhost:3000/api-docs
+https://app.swaggerhub.com/apis/YUMIALP/tech-challenge_fiap/1.0.0
 ```
-
+Collections
+```bash
+https://meera-studio.postman.co/workspace/cdf5f9ab-59c8-420c-acb6-144f0b6195b1/request/1116492-7346a3a7-b607-42aa-86d6-dc6f08756c6d
+```
 MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb.com/docs/mongodb-shell/)
 ```bash
 localhost:27017
