@@ -17,7 +17,23 @@ spec:
           - name: database
             mountPath: /data/db        
         ports:
-        - containerPort: 27017       
+        - containerPort: 27017  
+        # livenessProbe:
+        #   exec:
+        #     command:
+        #     - mongosh -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --eval db.adminCommand\(\"ping\"\)
+        #   failureThreshold: 3
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 5         
+        # readinessProbe:
+        #   exec:
+        #     command:
+        #     - mongosh -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --eval db.adminCommand\(\"ping\"\)
+        #   failureThreshold: 3
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 5                   
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
             valueFrom:
@@ -31,7 +47,7 @@ spec:
                 key: MONGO_INITDB_ROOT_PASSWORD        
         resources:
           limits:
-            memory: "256Mi"
+            memory: "2000Mi"
             cpu: "1000m"           
       volumes:
       - name: database

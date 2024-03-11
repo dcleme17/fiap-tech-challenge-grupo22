@@ -15,9 +15,9 @@ spec:
         image: dcleme17/fiap-tc-backend:fase2
         imagePullPolicy: Always        
         resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+          requests:
+            cpu: 1000m
+            memory: 512Mi
         ports:
         - containerPort: 3000     
         livenessProbe: 
@@ -70,7 +70,7 @@ spec:
               secretKeyRef:
                 name: backend
                 key: MERCADOPAGO_POS  
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
