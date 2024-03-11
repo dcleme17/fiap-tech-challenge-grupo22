@@ -105,6 +105,18 @@ Visão geral da estrutura do projeto
 
 ![Hexagonal](hexagonal.jpg)
 
+Estrutura backend
+
+![Backend](backend.jpg)
+
+Estrutura database
+
+![Database](database.jpg)
+
+Estrutura POD
+
+![Pod](pod.jpg)
+
 Estrutura dos arquivos e diretórios do projeto
 ```shell
 src
