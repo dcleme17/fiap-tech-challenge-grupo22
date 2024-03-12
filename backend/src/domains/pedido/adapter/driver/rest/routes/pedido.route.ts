@@ -149,6 +149,7 @@ body('itens').notEmpty().isArray(),
       
       /**
           @Swagger
+          
           #swagger.auto = true
           #swagger.summary = 'Atualiza um pedido'
           #swagger.description = 'Atualiza os dados de um pedido pelo codigo'
