@@ -250,7 +250,7 @@ MongoDB (pelo terminal do docker é possível usar o mongosh https://www.mongodb
 ```bash
 localhost:27017
 ```
-Mongo Express (Interface para manutenção do MongoDB)
+Vídeo
 ```bash
-http://localhost:8081 
+https://www.youtube.com/watch?v=F19b3GPzJHo 
 ```
