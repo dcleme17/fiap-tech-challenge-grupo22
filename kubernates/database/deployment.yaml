@@ -47,8 +47,8 @@ spec:
                 key: MONGO_INITDB_ROOT_PASSWORD        
         resources:
           limits:
-            memory: "2000Mi"
-            cpu: "1000m"           
+            memory: 2000Mi
+            cpu: 1000m         
       volumes:
       - name: database
         persistentVolumeClaim:
